@@ -7,6 +7,14 @@ public class TRLAPP_Test {
 	
 	
 	@Test
+	public void test_copyAvailable() {
+		Patron p1 = new Patron("P1", "Eric");
+		Copy c = new Copy("C1", "Fun with Objects");
+		assertTrue(c instanceof Copy && c.getOutTo().getName() == null) ;
+	}
+	
+	
+	@Test
 	public void test_verifyPatron() {
 		Patron p1 = new Patron("P1", "Eric");
 		Patron p2 = new Patron("P2", "Rong");
@@ -30,5 +38,15 @@ public class TRLAPP_Test {
 	}
 	
 
+	@Test
+	public void test_checkCopyIn() {
+		
+		Patron p1 = new Patron("P1", "Eric");
+		Copy c = new Copy("C1", "Fun with Objects");
+		Copy c1 = FakeDB.getCopy(c.getCopyID());
+		assertFalse("copy C1 checked to P1", TRLApp.checkCopyIn(c1, p1));
+
+	}
+	
 
 }

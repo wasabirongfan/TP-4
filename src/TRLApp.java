@@ -68,13 +68,13 @@ public class TRLApp {
 		return false;
 	}
 
-	public boolean checkCopyIn(Copy c, Patron p) {
+	public static boolean checkCopyIn(Copy c, Patron p) {
 		System.out.println("...checking in " + c.getTitle());
 		// check if the Patron returning the book actually checked it out
 		if (c instanceof Copy && c.getOutTo() == p) {
 			c.setOutTo(new Patron(null, null));
 			p.getCopiesOut().remove(c);
-			System.out.println(this.toString());
+			//System.out.println(this.toString());
 			System.out.println(c.toString());
 
 			return true;
