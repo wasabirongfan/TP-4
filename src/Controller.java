@@ -92,6 +92,11 @@ public class Controller
 				StdOut.println("Checking out " + c1.getTitle() + " to " + p1.getName());
 				Copy.checkCopyOut(c1, p1);
 
+				if (Patron.hold() == true)
+				{
+					StdOut.print("Patron has hold");
+				}
+
 			}
 
 		}

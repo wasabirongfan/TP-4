@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -10,7 +11,7 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private static GregorianCalendar dueDate;
+	private static Calendar dueDate;
 
 	public Copy(String copyID, String title)
 	{
@@ -68,14 +69,14 @@ public class Copy
 		this.copyID = copyID;
 	}
 
-	public static GregorianCalendar getdueDate()
+	public static Calendar getdueDate()
 	{
 		return dueDate;
 	}
 
-	public void setdueDate(int year, int month, int day)
+	public void setdueDate(Calendar dueDate)
 	{
-		this.dueDate = new GregorianCalendar();
+		this.dueDate = new GregorianCalendar(2018, 1, 1);
 	}
 
 	public static boolean checkCopyOut(Copy c, Patron p)
@@ -87,7 +88,7 @@ public class Copy
 		{
 			c.setOutTo(p);
 			p.getCopiesOut().add(c);
-			c.setdueDate(2018, 1, 1);
+			c.getdueDate();
 			System.out.println(c.toString());
 
 			return true;

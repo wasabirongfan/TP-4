@@ -54,10 +54,17 @@ public class Controller_Test
 	}
 
 	@Test
-	public void test_dueDate()
+	public void test_notOverdue()
 	{
-		Calendar Dec10 = new GregorianCalendar(2018, 12, 10);
+		Calendar today = new GregorianCalendar(2017, 12, 10);
 		assertTrue("the copy is not overdue", Patron.hold());
+	}
+
+	@Test
+	public void test_overdue()
+	{
+		Calendar today = new GregorianCalendar(2018, 1, 10);
+		assertTrue("the copy is overdue", Patron.hold());
 	}
 
 }

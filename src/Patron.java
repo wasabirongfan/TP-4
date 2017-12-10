@@ -11,13 +11,19 @@ public class Patron
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
-	static Calendar today = GregorianCalendar.getInstance();;
+	private static Calendar today = new GregorianCalendar();
 
 	public Patron(String id, String name)
 	{
 		this.patronID = id;
 		this.setName(name);
 		this.copiesOut = new ArrayList<Copy>();
+	}
+
+	private Calendar GregorianCalendar(int year, int month, int day)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public String getPatronID()
