@@ -1,76 +1,76 @@
-
-
-/**
- * 
- * Starting class for TP-1
- * 
- * Feel free to add, modify, or delete any of the following code: it's just a
- * possible starting implementation
- *
- * @author eric
- *
- */
-
 import java.util.ArrayList;
 
-public class Patron {
+/**
+ * @author Raymond Mbah & Rong Fan
+ *
+ */
+public class Patron
+{
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
 
-	public Patron(String id, String name) {
-		// finish this
+	public Patron(String id, String name)
+	{
 		this.patronID = id;
 		this.setName(name);
 		this.copiesOut = new ArrayList<Copy>();
 	}
 
-	public String getPatronID() {
+	public String getPatronID()
+	{
 		return patronID;
 	}
 
-	public void setPatronID(String patronID) {
+	public void setPatronID(String patronID)
+	{
 		this.patronID = patronID;
 	}
 
-	public ArrayList<Copy> getCopiesOut() {
+	public ArrayList<Copy> getCopiesOut()
+	{
 		return copiesOut;
 	}
 
-	public void setCopiesOut(ArrayList<Copy> copiesOut) {
+	public void setCopiesOut(ArrayList<Copy> copiesOut)
+	{
 		this.copiesOut = copiesOut;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		// finish this: two are equals iff same patron ID
-		if (o instanceof Patron) {
+	public boolean equals(Object o)
+	{
+		if (o instanceof Patron)
+		{
 			if (((Patron) o).patronID == this.patronID)
 				return true;
 		}
 		return false;
 	}
 
-	public String toString() {
-		// finish this: return basic Patron info as String
+	public String toString()
+	{
 
-		// return "A description of this Patron's current state.";
 		return "Patron ID: " + this.patronID + ", Patron name: " + this.getName() + ", Patron copies out: "
 				+ this.copiesOut.toString();
 
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
-	
-	public static boolean verifyPatron(Patron p) {
 
-		if (FakeDB.getPatronStore().containsKey(p.getPatronID())) {
+	public static boolean verifyPatron(Patron p)
+	{
+
+		if (FakeDB.getPatronStore().containsKey(p.getPatronID()))
+		{
 			return true;
 		}
 		return false;
