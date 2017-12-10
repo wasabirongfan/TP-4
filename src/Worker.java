@@ -1,9 +1,9 @@
 
+
 public class Worker {
 	private String name;
 
 	public Worker(String name) {
-		super();
 		this.name = name;
 	}
 

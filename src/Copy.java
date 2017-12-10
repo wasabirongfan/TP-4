@@ -1,3 +1,4 @@
+
 import java.util.Date;
 
 /**
@@ -75,6 +76,49 @@ public class Copy {
 
 	public void setDeuDAte(String deuDAte) {
 		this.deuDAte = deuDAte;
+	}
+	
+
+	public static boolean checkCopyOut(Copy c, Patron p) {
+		System.out.println("...checking out " + c.getTitle() + " to " + p.getName());
+		// check if the copy is currently available before checking it out
+		if (c instanceof Copy && c.getOutTo().getName() == null) {
+			c.setOutTo(p);
+			p.getCopiesOut().add(c);
+			c.setDeuDAte("Dec 23 2017");
+			// System.out.println(c.toString());
+			System.out.println(c.toString());
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean checkCopyIn(Copy c, Patron p) {
+		System.out.println("...checking in " + c.getTitle());
+		// check if the Patron returning the book actually checked it out
+		if (c instanceof Copy && c.getOutTo() == p) {
+			c.setOutTo(new Patron(null, null));
+			p.getCopiesOut().remove(c);
+			//System.out.println(this.toString());
+			System.out.println(c.toString());
+
+			return true;
+		}
+
+		return false;
+	}
+
+	
+	
+	public static boolean verifyCopy(Copy c) {
+
+		if (FakeDB.getCopyStore().containsKey(c.getCopyID())) {
+			return true;
+		}
+		return false;
+
 	}
 
 }

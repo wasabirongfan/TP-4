@@ -1,4 +1,5 @@
 
+
 /**
  * 
  * Starting class for TP-1
@@ -65,6 +66,15 @@ public class Patron {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public static boolean verifyPatron(Patron p) {
+
+		if (FakeDB.getPatronStore().containsKey(p.getPatronID())) {
+			return true;
+		}
+		return false;
+
 	}
 
 }
