@@ -1,6 +1,9 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.junit.Test;
 
 public class Controller_Test
@@ -48,6 +51,13 @@ public class Controller_Test
 		Copy c1 = FakeDB.getCopy(c.getCopyID());
 		assertFalse("copy C1 checked to P1", Copy.checkCopyIn(c1, p1));
 
+	}
+
+	@Test
+	public void test_dueDate()
+	{
+		Calendar Dec10 = new GregorianCalendar(2018, 12, 10);
+		assertTrue("the copy is not overdue", Patron.hold());
 	}
 
 }
