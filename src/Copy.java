@@ -13,7 +13,7 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private static long dueDate;
+	private static Calendar dueDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
 	static int DUE_DATE_NUM_MONTHS = 3; //number of months used to set the due date of a copy as from when the copy was checked out
 
@@ -28,7 +28,7 @@ public class Copy
 	{
 
 		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
-				+ " Due date: " + sdf.format(this.dueDate);
+				+ " Due date: " + this.dueDate.getTime() ;
 
 	}
 
@@ -73,14 +73,14 @@ public class Copy
 		this.copyID = copyID;
 	}
 
-	public static long getdueDate()
+	public static Calendar getdueDate()
 	{
 		return dueDate;
 	}
 
-	public void setdueDate(Date date)
+	public void setdueDate(Calendar date)
 	{
-		this.dueDate = date.getTime();
+		this.dueDate = date;
 
 		//this.dueDate = new GregorianCalendar(2018, 1, 1);
 	}
@@ -95,7 +95,7 @@ public class Copy
 			//c.getdueDate();
 			Calendar calendar = new GregorianCalendar();//default is current date and time
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
-			c.setdueDate(calendar.getTime());
+			c.setdueDate(calendar);
 			
 			return true;
 		}
@@ -129,6 +129,15 @@ public class Copy
 		}
 		return false;
 
+	}
+	
+	
+	public boolean isOverdue() {
+		Calendar today = new GregorianCalendar();
+			if (today.after(this.getdueDate())) { // check if today is after duedate
+				return true;
+			}
+		return false;
 	}
 
 }

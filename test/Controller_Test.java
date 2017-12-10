@@ -1,14 +1,29 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class Controller_Test
 {
 
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+	
+	Calendar today = new GregorianCalendar();	
+	Copy c =  new Copy("C3", "Fun with Classes");
+	Patron p = new Patron("P1", "Fan47");
+
+	@Before 
+	public void initialize() {
+				c.checkCopyOut(c, p);
+	}
+
+
+	
 	@Test
 	public void test_copyAvailable()
 	{
@@ -41,7 +56,7 @@ public class Controller_Test
 		assertFalse("copy C1 checked to P1", Copy.checkCopyOut(c1, p2));
 
 	}
-
+/*
 	@Test
 	public void test_checkCopyIn()
 	{
@@ -52,19 +67,67 @@ public class Controller_Test
 		assertFalse("copy C1 checked to P1", Copy.checkCopyIn(c1, p1));
 
 	}
-
+*/
 	@Test
 	public void test_notOverdue()
 	{
-		Calendar today = new GregorianCalendar(2017, 12, 10);
-		assertTrue("the copy is not overdue", Patron.hold());
+
+		
+		//Calendar today = new GregorianCalendar();		
+		//Copy c =  new Copy("C3", "Fun with Classes");
+		//StdOut.println( "...." + sdf.format( c.getdueDate()) ); 
+		assertFalse("the copy is not overdue", c.isOverdue());
 	}
 
 	@Test
 	public void test_overdue()
 	{
-		Calendar today = new GregorianCalendar(2018, 1, 10);
-		assertTrue("the copy is overdue", Patron.hold());
+		//Copy c =  new Copy("C3", "Fun with Classes");		
+		Calendar date = new GregorianCalendar();//defualts to today
+		date.add(date.YEAR, -1);//minus one year from date before updating due date
+		c.setdueDate(date);
+		assertTrue("the copy is overdue", c.isOverdue());
+	}
+	
+	
+
+	@Test
+	public void test_does_not_hasHold()
+	{
+		Calendar today = new GregorianCalendar();	
+		Copy c =  new Copy("C3", "Fun with Classes");
+		Patron p = new Patron("P1", "Fan47");
+		c.checkCopyOut(c, p);
+		assertFalse("P1 does not have holds", p.hasHold());
+		StdOut.println("done testing does not have holds");
+	}
+
+	@Test
+	public void test_hasHold()
+	{		
+		Copy c =  new Copy("C3", "Fun with Classes");		
+		Patron p = new Patron("P1", "Fan47");	
+		c.checkCopyOut(c, p);
+		
+
+		
+		Calendar date = new GregorianCalendar();//defualts to today
+		StdOut.println("++.." + sdf.format(date.getTime()));
+
+		date.add(date.YEAR, -10);//minus one year from date before updating due date
+		
+
+		StdOut.println("--.." + sdf.format(date.getTime()));
+		Copy c_test = p.getCopiesOut().get(0);
+		StdOut.println("0000");
+		p.getCopiesOut().get(0).setdueDate(date);
+		
+		//StdOut.println("::::+++.." + sdf.format(p.getCopiesOut().get(0).getdueDate()));
+
+
+		assertTrue("the copy is overdue", p.hasHold());
+		StdOut.println("---+++++++--");
+
 	}
 
 }

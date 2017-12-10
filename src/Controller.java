@@ -84,7 +84,7 @@ public class Controller {
 				StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
 				
 				//check if patron has holds before starting check out
-				if(p1.hold() == true) {
+				if(p1.hasHold() == true) {
 					StdOut.print(p1.getName() + " has hold(s)");					
 				}else { //else p1 has no holds. Proceed with checkout
 					if(Copy.checkCopyOut(c1, p1)) {

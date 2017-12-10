@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -67,17 +68,33 @@ public class Patron {
 
 	public static boolean verifyPatron(Patron p) {
 
-		if (FakeDB.getPatronStore().containsKey(p.getPatronID())) {
+		String pId = p.getPatronID();
+		String pName = p.getName().toString();
+		
+		System.out.println("...." + pId + "||"+  pName + "....." + FakeDB.getPatronStore().get(pId).getName());
+		StdOut.println( FakeDB.getPatronStore().containsKey(pId) + ":::" + (FakeDB.getPatronStore().get(pId).getName().equals(pName) ) )  ;
+		if ( FakeDB.getPatronStore().containsKey(pId) && (FakeDB.getPatronStore().get(pId).getName().equals(pName)) ) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean hold() {
+	public boolean hasHold() {
 		Calendar today = new GregorianCalendar();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+		//StdOut.println("}}}}}}..." +  sdf.format(this.copiesOut.get(this.copiesOut.size() - 1).getdueDate()) );
+		
+		
 		// loop throug patron's books and check if patron has any holds(copies past due)
 		for (int i = 0; i < this.getCopiesOut().size(); i++) {
-			if (today.after(copiesOut.get(i).getdueDate())) { // check if today is after duedate
+			//StdOut.println("^^^^... size = " + this.getCopiesOut().size() + "::" +  sdf.format(copiesOut.get(i).getdueDate()) );
+			//StdOut.println("*****....asdf.asdf...." + sdf.format(copiesOut.get(i).getdueDate()));
+			//StdOut.println("^^^^+++" +  today.getTime().toString() + "::::" + sdf.format(copiesOut.get(i).getdueDate() )  );
+			
+			copiesOut.get(i).getdueDate();
+			
+			if ( today.after(copiesOut.get(i).getdueDate())) { // check if today is after duedate
+				StdOut.println("(((((((");
 				return true;
 			}
 
