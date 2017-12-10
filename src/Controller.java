@@ -57,7 +57,7 @@ public class Controller {
 
 				StdOut.println("...Starting checkout session....");
 
-				StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
+				StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
 				Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
 
 				while (Patron.verifyPatron(p1) == false) {
@@ -68,7 +68,7 @@ public class Controller {
 
 				}
 
-				System.out.println("Patron Information: \n\t" + p1.toString());
+				System.out.println(p1.toString());
 				StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
 				Copy c = new Copy(StdIn.readString(), StdIn.readString());
 
@@ -81,12 +81,25 @@ public class Controller {
 				}
 
 				Copy c1 = FakeDB.getCopy(c.getCopyID());
-				System.out.println(c1.toString());
-				StdOut.println("Checking out " + c1.getTitle() + " to " + p1.getName());
-				Copy.checkCopyOut(c1, p1);
+				StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
+				
+				//check if patron has holds before starting check out
+				if(p1.hold() == true) {
+					StdOut.print(p1.getName() + " has hold(s)");					
+				}else { //else p1 has no holds. Proceed with checkout
+					if(Copy.checkCopyOut(c1, p1)) {
+				        System.out.printf("|+++---------------------------------------------------------------------------------------------------+++|\n");
+				        System.out.printf("|+++---------------------------------------------------------------------------------------------------+++|\n");
+						StdOut.println("Check out successfull!.");
+						System.out.println(c1.toString());
+						StdOut.println(p1.toString());
+				        System.out.printf("|+++---------------------------------------------------------------------------------------------------+++|\n");
+				        System.out.printf("|+++---------------------------------------------------------------------------------------------------+++|\n");
 
-				if (Patron.hold() == true) {
-					StdOut.print("Patron has hold");
+					}else{
+						
+					};
+					
 				}
 
 			}

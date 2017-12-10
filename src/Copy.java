@@ -15,7 +15,7 @@ public class Copy
 	private Patron outTo;
 	private static long dueDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-
+	static int DUE_DATE_NUM_MONTHS = 3; //number of months used to set the due date of a copy as from when the copy was checked out
 
 	public Copy(String copyID, String title)
 	{
@@ -87,17 +87,16 @@ public class Copy
 
 	public static boolean checkCopyOut(Copy c, Patron p)
 	{
-		System.out.println("...checking out " + c.getTitle() + " to " + p.getName());
-
 		// check if the copy is currently available before checking it out
 		if (c instanceof Copy && c.getOutTo().getName() == null)
 		{
 			c.setOutTo(p);
 			p.getCopiesOut().add(c);
 			//c.getdueDate();
-			c.setdueDate(new GregorianCalendar().getTime());;
-			System.out.println(c.toString());
-
+			Calendar calendar = new GregorianCalendar();//default is current date and time
+			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
+			c.setdueDate(calendar.getTime());
+			
 			return true;
 		}
 
