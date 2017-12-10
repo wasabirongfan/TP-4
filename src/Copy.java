@@ -1,3 +1,5 @@
+import java.util.GregorianCalendar;
+
 /**
  * @author Raymond Mbah & Rong Fan
  *
@@ -8,7 +10,7 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private String deuDAte;
+	private static GregorianCalendar dueDate;
 
 	public Copy(String copyID, String title)
 	{
@@ -21,7 +23,7 @@ public class Copy
 	{
 
 		return "coppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
-				+ " Due date: " + this.deuDAte;
+				+ " Due date: " + this.dueDate;
 
 	}
 
@@ -66,14 +68,14 @@ public class Copy
 		this.copyID = copyID;
 	}
 
-	public String getDeuDAte()
+	public static GregorianCalendar getdueDate()
 	{
-		return deuDAte;
+		return dueDate;
 	}
 
-	public void setDeuDAte(String deuDAte)
+	public void setdueDate(int year, int month, int day)
 	{
-		this.deuDAte = deuDAte;
+		this.dueDate = new GregorianCalendar();
 	}
 
 	public static boolean checkCopyOut(Copy c, Patron p)
@@ -85,7 +87,7 @@ public class Copy
 		{
 			c.setOutTo(p);
 			p.getCopiesOut().add(c);
-			c.setDeuDAte("Dec 23 2017");
+			c.setdueDate(2018, 1, 1);
 			System.out.println(c.toString());
 
 			return true;

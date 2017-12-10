@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * @author Raymond Mbah & Rong Fan
@@ -9,6 +11,7 @@ public class Patron
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
+	static Calendar today = GregorianCalendar.getInstance();;
 
 	public Patron(String id, String name)
 	{
@@ -74,7 +77,14 @@ public class Patron
 			return true;
 		}
 		return false;
-
 	}
 
+	public static boolean hold()
+	{
+		if (!(today.after(Copy.getdueDate())))
+		{
+			return true;
+		}
+		return false;
+	}
 }
