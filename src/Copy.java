@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -11,7 +13,9 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private static Calendar dueDate;
+	private static long dueDate;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+
 
 	public Copy(String copyID, String title)
 	{
@@ -23,8 +27,8 @@ public class Copy
 	public String toString()
 	{
 
-		return "coppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
-				+ " Due date: " + this.dueDate;
+		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
+				+ " Due date: " + sdf.format(this.dueDate);
 
 	}
 
@@ -69,14 +73,16 @@ public class Copy
 		this.copyID = copyID;
 	}
 
-	public static Calendar getdueDate()
+	public static long getdueDate()
 	{
 		return dueDate;
 	}
 
-	public void setdueDate(Calendar dueDate)
+	public void setdueDate(Date date)
 	{
-		this.dueDate = new GregorianCalendar(2018, 1, 1);
+		this.dueDate = date.getTime();
+
+		//this.dueDate = new GregorianCalendar(2018, 1, 1);
 	}
 
 	public static boolean checkCopyOut(Copy c, Patron p)
@@ -88,7 +94,8 @@ public class Copy
 		{
 			c.setOutTo(p);
 			p.getCopiesOut().add(c);
-			c.getdueDate();
+			//c.getdueDate();
+			c.setdueDate(new GregorianCalendar().getTime());;
 			System.out.println(c.toString());
 
 			return true;

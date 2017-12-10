@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -9,15 +10,14 @@ import java.util.ArrayList;
  *         to run the app.
  *
  */
-public class Controller
-{
+public class Controller {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 
 		StdOut.print("Pelase Enter you worker name e.g Fan or Raymond: ");
 
 		ArrayList<Worker> workers = FakeDB.getWorkerStore();
+
 
 		/**
 		 * Initialization
@@ -26,8 +26,7 @@ public class Controller
 		// get worker name
 		ArrayList<String> workerNames = new ArrayList<>();
 
-		for (int i = 0; i < workers.size(); i++)
-		{
+		for (int i = 0; i < workers.size(); i++) {
 			workerNames.add(workers.get(i).getName());
 		}
 
@@ -37,8 +36,7 @@ public class Controller
 
 		String name = StdIn.readString();
 
-		while (workerNames.contains(name) == false)
-		{
+		while (workerNames.contains(name) == false) {
 			StdOut.println("Incorrect worker name.Pelase Enter you worker name: ");
 			name = StdIn.readString();
 		}
@@ -46,27 +44,23 @@ public class Controller
 		// presentation logic for running the application
 		String choice = "";
 
-		while (!choice.toLowerCase().equals("o"))
-		{
+		while (!choice.toLowerCase().equals("o")) {
 			StdOut.println("what will you like to do: Enter 'i' for checkin or 'o' for checkout");
 			choice = StdIn.readString();
 
-			if (!choice.toLowerCase().equals("o"))
-			{
+			if (!choice.toLowerCase().equals("o")) {
 				StdOut.println("checkout is the only available functionality for now. "
 						+ "More functionality will be available later");
 			}
 
-			else
-			{
+			else {
 
 				StdOut.println("...Starting checkout session....");
 
 				StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
 				Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
 
-				while (Patron.verifyPatron(p1) == false)
-				{
+				while (Patron.verifyPatron(p1) == false) {
 					System.out.println("Patron Information:\n\tpatron with id: " + p1.getPatronID() + " and name: "
 							+ p1.getName() + " doesn't exist in our database");
 					StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
@@ -74,13 +68,12 @@ public class Controller
 
 				}
 
-				System.out.println(p1.toString());
+				System.out.println("Patron Information: \n\t" + p1.toString());
 				StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
 				Copy c = new Copy(StdIn.readString(), StdIn.readString());
 
-				while (Copy.verifyCopy(c) == false)
-				{
-					System.out.println("Patron information:\n\tcopy with id: " + c.getCopyID() + " and title: "
+				while (Copy.verifyCopy(c) == false) {
+					System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: "
 							+ c.getTitle() + " doesn't exist in our database");
 					StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
 					c = new Copy(StdIn.readString(), StdIn.readString());
@@ -92,8 +85,7 @@ public class Controller
 				StdOut.println("Checking out " + c1.getTitle() + " to " + p1.getName());
 				Copy.checkCopyOut(c1, p1);
 
-				if (Patron.hold() == true)
-				{
+				if (Patron.hold() == true) {
 					StdOut.print("Patron has hold");
 				}
 
