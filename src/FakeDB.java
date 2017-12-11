@@ -84,5 +84,16 @@ public class FakeDB
 	{
 		FakeDB.workerStore = workerStore;
 	}
+	
+	public static ArrayList<String> getWorkerNames(){
+		ArrayList<Worker> workers = FakeDB.getWorkerStore();
+
+		ArrayList<String> workerNames = new ArrayList<>();
+		for (int i = 0; i < workers.size(); i++) {
+			workerNames.add(workers.get(i).getName());
+		}
+		return workerNames;
+
+	}
 
 }

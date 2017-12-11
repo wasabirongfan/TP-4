@@ -105,7 +105,7 @@ public class Copy
 
 	public static boolean checkCopyIn(Copy c, Patron p)
 	{
-		System.out.println("...checking in " + c.getTitle());
+		System.out.println("...Starting checking in " + c.getTitle());
 
 		// check if the Patron returning the book actually checked it out
 		if (c instanceof Copy && c.getOutTo() == p)

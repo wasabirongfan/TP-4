@@ -56,18 +56,24 @@ public class Controller_Test
 		assertFalse("copy C1 checked to P1", Copy.checkCopyOut(c1, p2));
 
 	}
-/*
+
 	@Test
 	public void test_checkCopyIn()
 	{
 
 		Patron p1 = new Patron("P1", "Eric");
+		
 		Copy c = new Copy("C1", "Fun with Objects");
 		Copy c1 = FakeDB.getCopy(c.getCopyID());
+		
+		Patron p2 = new Patron("P2", "Fan47");
+		Copy.checkCopyOut(c1, p2);
+		
 		assertFalse("copy C1 checked to P1", Copy.checkCopyIn(c1, p1));
+		assertTrue("copy C1 checked to P1", Copy.checkCopyIn(c1, p2));
 
 	}
-*/
+
 	@Test
 	public void test_notOverdue()
 	{
@@ -129,5 +135,7 @@ public class Controller_Test
 		StdOut.println("---+++++++--");
 
 	}
+	
+
 
 }
