@@ -13,8 +13,7 @@ import java.util.ArrayList;
 public class Controller {
 
 	public static void main(String[] args) {
-		StdOut.print("Pelase Enter you worker name e.g Fan or Raymond: ");
-		initialize(StdIn.readString());
+		initialize();
 		// presentation logic for running the application
 		String choice = "";
 		while (!choice.toLowerCase().equals("o") && !choice.toLowerCase().equals("i")) {
@@ -31,9 +30,10 @@ public class Controller {
 
 	}
 
-	private static boolean initialize(String name) {
+	public static boolean initialize() {
+		StdOut.print("Pelase Enter you worker name e.g Fan or Raymond: ");
 		System.out.println("worker names: " + FakeDB.getWorkerNames().toString());
-		// String name = StdIn.readString();
+		String name = StdIn.readString();
 		while (Worker.validateWorker(name) == false) {
 			StdOut.println("Incorrect worker name. Pelase Enter a valid you worker name: ");
 			name = StdIn.readString();
@@ -42,8 +42,8 @@ public class Controller {
 		return true;
 	}
 
-	private static boolean startCheckIn() {
-		StdOut.println("...Starting in session....");
+	public static boolean startCheckIn() {
+		StdOut.println("...Starting check in session....");
 		StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
 
 		Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
@@ -67,31 +67,30 @@ public class Controller {
 			Copy c = new Copy(StdIn.readString(), StdIn.readString());
 			StdOut.println("\ntesting if you can see me here! ");
 
-
 			while (Copy.verifyCopy(c1) == false) {
 				System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
 						+ " doesn't exist in our database");
 				StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
 				c = new Copy(StdIn.readString(), StdIn.readString());
 			}
-				if (Copy.checkCopyIn(c1, p1)) {
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					StdOut.println("Check in successfull!.");
-					System.out.println(c.toString());
-					StdOut.println(p1.toString());
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
+			if (Copy.checkCopyIn(c1, p1)) {
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				StdOut.println("Check in successfull!.");
+				System.out.println(c.toString());
+				StdOut.println(p1.toString());
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
 
-				}else {
-					StdOut.println("copy is not checked out to the patron");
-				}
+			} else {
+				StdOut.println("copy is not checked out to the patron");
+			}
 
-			}else if (checkInCopy.toLowerCase().equals("n")) {
+		} else if (checkInCopy.toLowerCase().equals("n")) {
 			StdOut.println(p1.getCopiesOut() + "Thank you for using TRL");
 		} else {
 			StdOut.println("Error checking in");
@@ -102,7 +101,7 @@ public class Controller {
 		return true;
 	}
 
-	private static boolean StartCheckout() {
+	public static boolean StartCheckout() {
 		StdOut.println("...Starting checkout session....");
 
 		StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
@@ -116,46 +115,74 @@ public class Controller {
 
 		}
 
-		System.out.println(p1.toString());
-		StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
-		Copy c = new Copy(StdIn.readString(), StdIn.readString());
+		String option = "y";
+		while (option.equals("y")) {
 
-		while (Copy.verifyCopy(c) == false) {
-			System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
-					+ " doesn't exist in our database");
-			StdOut.println("\nPlease enter copy ID and title e.g : 'C1 ,Fun with Objects' ");
-			c = new Copy(StdIn.readString(), StdIn.readString());
+			System.out.println(p1.toString());
+			StdOut.println("\nPlease enter copy ID e.g : C1 ");
+			String id = StdIn.readString();
+			StdOut.println("Pleae enter title e.g : 'Fun with Objects' ");
 
-		}
+			String title = StdIn.readLine();
+			StdOut.println("......" + title);
+			Copy c = new Copy(id, title);
 
-		Copy c1 = FakeDB.getCopy(c.getCopyID());
-		StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
-
-		// check if patron has holds before starting check out
-		if (p1.hasHold() == true) {
-			StdOut.print(p1.getName() + " has hold(s)");
-		} else { // else p1 has no holds. Proceed with checkout
-			if (Copy.checkCopyOut(c1, p1)) {
-				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				StdOut.println("Check out successfull!.");
-				System.out.println(c1.toString());
-				StdOut.println(p1.toString());
-				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-
-			} else {
+			while (Copy.verifyCopy(c) == false) {
+				System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
+						+ " doesn't exist in our database");
+				StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
+				id = StdIn.readString();
+				StdOut.println("Pleae enter title e.g : 'Fun with Objects' ");
+				title = StdIn.readLine();
+				c = new Copy(id, title);
 
 			}
-			;
+
+			Copy c1 = FakeDB.getCopy(c.getCopyID());
+			StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
+
+			// check if patron has holds before starting check out
+			if (p1.hasHold() == true) {
+				StdOut.print(p1.getName() + " has hold(s)");
+			} else { // else p1 has no holds. Proceed with checkout
+
+				if (Copy.checkCopyOut(c1, p1)) {
+					System.out.printf(
+							"|+++---------------------------------------------------------------------------------------------------+++|\n");
+					System.out.printf(
+							"|+++---------------------------------------------------------------------------------------------------+++|\n");
+					StdOut.println("Check out successfull!.");
+					System.out.println(c1.toString());
+					StdOut.println(p1.toString());
+					System.out.printf(
+							"|+++---------------------------------------------------------------------------------------------------+++|\n");
+					System.out.printf(
+							"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				} else {
+
+				}
+
+			}
+
+			StdOut.println("Check out another copy? (y/n):");
+			option = StdIn.readString();
 
 		}
 
 		return true;
+	}
+
+	/** Display the main menu **/
+	public static void showMenu() {
+		System.out.println("Menu\n====");
+		System.out.println("Enter 1: To checkout");
+		System.out.println("Enter 2: To checkin");
+		System.out.println("Enter 3: To exit");
+	}
+
+	public static void exit() {
+		StdOut.println("...quiting TRLapp");
+		System.exit(1);
 	}
 
 }

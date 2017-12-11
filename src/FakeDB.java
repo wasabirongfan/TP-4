@@ -26,16 +26,16 @@ public class FakeDB
 		copyStore.put("C1", new Copy("C1", "Fun with Objects"));
 		copyStore.put("C2", new Copy("C2", "More Fun with Objects"));
 		copyStore.put("C3", new Copy("C3", "Fun with Classes"));
-		copyStore.put("C4", new Copy("C3", "Fun with Classes4"));
-		copyStore.put("C5", new Copy("C3", "Fun with Classes5"));
-		copyStore.put("C6", new Copy("C3", "Fun with Classes6"));
-		copyStore.put("C7", new Copy("C3", "Fun with Classes7"));
-		copyStore.put("C8", new Copy("C3", "Fun with Classes8"));
-		copyStore.put("C9", new Copy("C3", "Fun with Classes9"));
-		copyStore.put("C10", new Copy("C3", "Fun with Classes10"));
-		copyStore.put("C12", new Copy("C3", "Fun with Classes11"));
-		copyStore.put("C13", new Copy("C3", "Fun with Classes12"));
-		copyStore.put("C14", new Copy("C3", "Fun with Classes13"));
+		copyStore.put("C4", new Copy("C4", "Fun with Classes4"));
+		copyStore.put("C5", new Copy("C5", "Fun with Classes5"));
+		copyStore.put("C6", new Copy("C6", "Fun with Classes6"));
+		copyStore.put("C7", new Copy("C7", "Fun with Classes7"));
+		copyStore.put("C8", new Copy("C8", "Fun with Classes8"));
+		copyStore.put("C9", new Copy("C9", "Fun with Classes9"));
+		copyStore.put("C10", new Copy("C10", "Fun with Classes10"));
+		copyStore.put("C11", new Copy("C11", "Fun with Classes11"));
+		copyStore.put("C12", new Copy("C12", "Fun with Classes12"));
+		copyStore.put("C13", new Copy("C13", "Fun with Classes13"));
 
 
 		workerStore.add(new Worker("Fan"));

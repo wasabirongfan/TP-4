@@ -28,7 +28,7 @@ public class Copy
 	{
 
 		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
-				+ " Due date: " + this.dueDate.getTime() ;
+				+ ", Due date: " + this.dueDate.getTime() ;
 
 	}
 
