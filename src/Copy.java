@@ -14,9 +14,7 @@ public class Copy
 	private Patron outTo;
 	private static Calendar dueDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-	static int DUE_DATE_NUM_MONTHS = 3; // number of months used to set the due
-										// date of a copy as from when the copy
-										// was checked out
+	static int DUE_DATE_NUM_MONTHS = 3;
 
 	public Copy(String copyID, String title)
 	{
@@ -134,7 +132,8 @@ public class Copy
 	{
 		Calendar today = new GregorianCalendar();
 		if (today.after(this.getdueDate()))
-		{ // check if today is after duedate
+
+		{
 			return true;
 		}
 		return false;

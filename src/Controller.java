@@ -156,7 +156,7 @@ public class Controller
 			StdOut.print(p1.getName() + " has hold(s)");
 		}
 		else
-		{ // else p1 has no holds. Proceed with checkout
+		{
 			if (Copy.checkCopyOut(c1, p1))
 			{
 				System.out.printf(
@@ -176,10 +176,7 @@ public class Controller
 			{
 
 			}
-			;
-
 		}
-
 		return true;
 	}
 

@@ -83,9 +83,8 @@ public class Controller_Test
 	@Test
 	public void test_overdue()
 	{
-		Calendar date = new GregorianCalendar();// defualts to today
-		date.add(date.YEAR, -1);// minus one year from date before updating due
-								// date
+		Calendar date = new GregorianCalendar();
+		date.add(date.YEAR, -1);
 		c.setdueDate(date);
 		assertTrue("the copy is overdue", c.isOverdue());
 	}
@@ -98,7 +97,6 @@ public class Controller_Test
 		Patron p = new Patron("P1", "Fan47");
 		c.checkCopyOut(c, p);
 		assertFalse("P1 does not have holds", p.hasHold());
-		StdOut.println("done testing does not have holds");
 	}
 
 	@Test
@@ -108,19 +106,15 @@ public class Controller_Test
 		Patron p = new Patron("P1", "Fan47");
 		c.checkCopyOut(c, p);
 
-		Calendar date = new GregorianCalendar();// defualts to today
-		StdOut.println("++.." + sdf.format(date.getTime()));
+		Calendar date = new GregorianCalendar();
+		StdOut.println(sdf.format(date.getTime()));
 
-		date.add(date.YEAR, -10);// minus one year from date before updating due
-									// date
+		date.add(date.YEAR, -10);
 
-		StdOut.println("--.." + sdf.format(date.getTime()));
 		Copy c_test = p.getCopiesOut().get(0);
-		StdOut.println("0000");
 		p.getCopiesOut().get(0).setdueDate(date);
 
 		assertTrue("the copy is overdue", p.hasHold());
-		StdOut.println("---+++++++--");
 
 	}
 
