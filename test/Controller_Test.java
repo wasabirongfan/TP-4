@@ -77,19 +77,14 @@ public class Controller_Test
 	public void test_notOverdue()
 	{
 
-		// Calendar today = new GregorianCalendar();
-		// Copy c = new Copy("C3", "Fun with Classes");
-		// StdOut.println( "...." + sdf.format( c.getdueDate()) );
 		assertFalse("the copy is not overdue", c.isOverdue());
 	}
 
 	@Test
 	public void test_overdue()
 	{
-		// Copy c = new Copy("C3", "Fun with Classes");
-		Calendar date = new GregorianCalendar();// defualts to today
-		date.add(date.YEAR, -1);// minus one year from date before updating due
-								// date
+		Calendar date = new GregorianCalendar();
+		date.add(date.YEAR, -1);
 		c.setdueDate(date);
 		assertTrue("the copy is overdue", c.isOverdue());
 	}
@@ -112,22 +107,13 @@ public class Controller_Test
 		Patron p = new Patron("P1", "Fan47");
 		c.checkCopyOut(c, p);
 
-		Calendar date = new GregorianCalendar();// defualts to today
-		StdOut.println("++.." + sdf.format(date.getTime()));
+		Calendar date = new GregorianCalendar();
 
-		date.add(date.YEAR, -10);// minus one year from date before updating due
-									// date
-
-		StdOut.println("--.." + sdf.format(date.getTime()));
+		date.add(date.YEAR, -10);
 		Copy c_test = p.getCopiesOut().get(0);
-		StdOut.println("0000");
 		p.getCopiesOut().get(0).setdueDate(date);
 
-		// StdOut.println("::::+++.." +
-		// sdf.format(p.getCopiesOut().get(0).getdueDate()));
-
 		assertTrue("the copy is overdue", p.hasHold());
-		StdOut.println("---+++++++--");
 
 	}
 

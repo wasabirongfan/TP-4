@@ -11,7 +11,7 @@ public class TRLapp
 			try
 			{
 
-				String s = StdIn.readString(); // readString();
+				String s = StdIn.readString();
 				StdOut.println("...choice entered = " + s);
 				choice = Integer.parseInt(s);
 				switch (choice)
@@ -23,8 +23,13 @@ public class TRLapp
 					Controller.startCheckIn();
 					break;
 				case 3:
-					Controller.exit();
+					Controller.searchPatron();
 					break;
+				case 4:
+					Controller.searchCopy();
+					break;
+				case 5:
+					Controller.exit();
 				default:
 					StdOut.println("Please enter a valid option");
 				}

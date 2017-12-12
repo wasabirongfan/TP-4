@@ -14,16 +14,14 @@ public class Copy
 	private Patron outTo;
 	private static Calendar dueDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-	static int DUE_DATE_NUM_MONTHS = 3; // number of months used to set the due
-										// date of a copy as from when the copy
-										// was checked out
+	static int DUE_DATE_NUM_MONTHS = 3;
 
 	public Copy(String copyID, String title)
 	{
 		this.copyID = copyID;
 		this.setTitle(title);
 		this.outTo = new Patron("", "");
-		this.dueDate = new GregorianCalendar(1970, 0, 1); // default date
+		this.dueDate = new GregorianCalendar();
 	}
 
 	public String toString()
@@ -83,22 +81,18 @@ public class Copy
 	public void setdueDate(Calendar date)
 	{
 		this.dueDate = date;
-
-		// this.dueDate = new GregorianCalendar(2018, 1, 1);
 	}
 
 	public static boolean checkCopyOut(Copy c, Patron p)
 	{
-		// check if the copy is currently available before checking it out
-		if (c instanceof Copy && c.getOutTo().getName() == null)
+		if (c instanceof Copy && c.getOutTo().getName() == "")
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);
 			;
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().add(c);
 			;
-			Calendar calendar = new GregorianCalendar();// default is current
-														// date and time
+			Calendar calendar = new GregorianCalendar();
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
 
@@ -112,17 +106,11 @@ public class Copy
 	{
 		System.out.println("...Starting checking in " + c.getTitle());
 
-		// check if the Patron returning the book actually checked it out
 		if (c instanceof Copy && c.getOutTo() == p)
 		{
 
-			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron(null, null));
+			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron("", ""));
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
-
-			// c.setOutTo(p);
-			// p.getCopiesOut().remove(c);
-			// System.out.println(".....adfa.sdf&&&.." +
-			// FakeDB.getPatronStore().get(p.getPatronID()).toString());
 
 			return true;
 		}
@@ -145,7 +133,7 @@ public class Copy
 	{
 		Calendar today = new GregorianCalendar();
 		if (today.after(this.getdueDate()))
-		{ // check if today is after duedate
+		{
 			return true;
 		}
 		return false;

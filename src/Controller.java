@@ -13,7 +13,7 @@ public class Controller
 	public static void main1(String[] args)
 	{
 		initialize();
-		// presentation logic for running the application
+
 		String choice = "";
 		while (!choice.toLowerCase().equals("o") && !choice.toLowerCase().equals("i"))
 		{
@@ -36,20 +36,9 @@ public class Controller
 
 	public static boolean initialize()
 	{
-
-		for (String key1 : FakeDB.getPatronStore().keySet())
-		{
-			StdOut.print(FakeDB.getPatronStore().get(key1) + "\n");
-		}
-		for (String key2 : FakeDB.getCopyStore().keySet())
-		{
-			StdOut.print("\n" + FakeDB.getCopyStore().get(key2) + "\n");
-		}
-
-		StdOut.print("\nPelase Enter you worker name e.g Fan or Raymond: ");
+		StdOut.print("Pelase Enter you worker name e.g Fan or Raymond: ");
 		System.out.println("worker names: " + FakeDB.getWorkerNames().toString());
 		String name = StdIn.readString();
-
 		while (Worker.validateWorker(name) == false)
 		{
 			StdOut.println("Incorrect worker name. Pelase Enter a valid you worker name: ");
@@ -72,7 +61,6 @@ public class Controller
 			System.out.println("Patron Information:\n\tpatron with id: " + p1.getPatronID() + " and name: "
 					+ p1.getName() + " doesn't exist in our database");
 			StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
-			// p1 = new Patron(StdIn.readString(), StdIn.readString());
 		}
 
 		String option = "y";
@@ -82,8 +70,7 @@ public class Controller
 			System.out.println(p1.toString());
 			StdOut.println("\nPlease enter copy ID e.g : C1 ");
 			String id = StdIn.readString();
-			// StdOut.println("Pleae enter title e.g : 'Fun with Objects' ");
-			String title = "";// StdIn.readLine();
+			String title = "";
 			Copy c = new Copy(id, title);
 
 			while (Copy.verifyCopy(c) == false)
@@ -92,9 +79,7 @@ public class Controller
 						+ " doesn't exist in our database");
 				StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
 				id = StdIn.readString();
-				// StdOut.println("Pleae enter title e.g : 'Fun with Objects'
-				// ");
-				title = "";// StdIn.readLine();
+				title = "";
 				c = new Copy(id, title);
 
 			}
@@ -102,14 +87,13 @@ public class Controller
 			Copy c1 = FakeDB.getCopyStore().get(c.getCopyID());
 			StdOut.println("......Checking in " + c1.getTitle() + " from " + p1.getName() + ".");
 
-			// check if patron has holds before starting check out
 			if (p1.hasHold() == true)
 			{
 				StdOut.print(p1.getName() + " has hold(s)");
 				return false;
 			}
 			else
-			{ // else p1 has no holds. Proceed with checkout
+			{
 
 				if (Copy.checkCopyIn(c1, p1))
 				{
@@ -165,8 +149,7 @@ public class Controller
 			System.out.println(p1.toString());
 			StdOut.println("\nPlease enter copy ID e.g : C1 ");
 			String id = StdIn.readString();
-			// StdOut.println("Pleae enter title e.g : 'Fun with Objects' ");
-			String title = "";// StdIn.readLine();
+			String title = "";
 			Copy c = new Copy(id, title);
 
 			while (Copy.verifyCopy(c) == false)
@@ -184,13 +167,12 @@ public class Controller
 			Copy c1 = FakeDB.getCopy(c.getCopyID());
 			StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
 
-			// check if patron has holds before starting check out
 			if (p1.hasHold() == true)
 			{
 				StdOut.print(p1.getName() + " has hold(s)");
 			}
 			else
-			{ // else p1 has no holds. Proceed with checkout
+			{
 
 				if (Copy.checkCopyOut(c1, p1))
 				{
@@ -227,7 +209,54 @@ public class Controller
 		System.out.println("Menu\n====");
 		System.out.println("Enter 1: To checkout");
 		System.out.println("Enter 2: To checkin");
-		System.out.println("Enter 3: To exit");
+		System.out.println("Enter 3: To search patron");
+		StdOut.println("Enter 4: To search copy");
+		StdOut.println("Enter 5: To exit");
+
+	}
+
+	public static void searchPatron()
+	{
+
+		StdOut.println("\n...Searching patron...\n");
+		StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
+		Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
+
+		while (Patron.verifyPatron(p1) == false)
+		{
+			System.out.println("Patron Information:\n\tpatron with id: " + p1.getPatronID() + " and name: "
+					+ p1.getName() + " doesn't exist in our database");
+			StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
+			p1 = new Patron(StdIn.readString(), StdIn.readString());
+
+		}
+
+		p1 = FakeDB.getPatronStore().get(p1.getPatronID());
+		StdOut.println(p1);
+	}
+
+	public static void searchCopy()
+	{
+		StdOut.println("\n...Searching copy...\n");
+		StdOut.println("\nPlease enter copy ID e.g : C1 ");
+
+		String id = StdIn.readString();
+		String title = "";
+		Copy c = new Copy(id, title);
+
+		while (Copy.verifyCopy(c) == false)
+		{
+			System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
+					+ " doesn't exist in our database");
+			StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
+			id = StdIn.readString();
+			title = "";
+			c = new Copy(id, title);
+
+		}
+
+		Copy c1 = FakeDB.getCopyStore().get(c.getCopyID());
+		StdOut.println(c1);
 	}
 
 	public static void exit()
