@@ -4,7 +4,7 @@
  *         startup, initialization, and some kind of Presentation Logic for the
  *         running application. It should also provide online instruction and
  *         help when you run it, giving the Patron and Copy identifiers needed
- *         to run the app.
+ *         to run the application.
  *
  */
 public class Controller
