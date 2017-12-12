@@ -16,16 +16,16 @@ public class Controller
 		initialize(StdIn.readString());
 
 		// presentation logic for running the application
-		String choice = "";
-		while (!choice.toLowerCase().equals("o") && !choice.toLowerCase().equals("i"))
+		String choiceToCheckInCheckOut = "";
+		while (!choiceToCheckInCheckOut.toLowerCase().equals("o") && !choiceToCheckInCheckOut.toLowerCase().equals("i"))
 		{
 			StdOut.println("what will you like to do: Enter 'i' for checkin or 'o' for checkout");
-			choice = StdIn.readString();
-			if (choice.toLowerCase().equals("i"))
+			choiceToCheckInCheckOut = StdIn.readString();
+			if (choiceToCheckInCheckOut.toLowerCase().equals("i"))
 			{
 				startCheckIn();
 			}
-			else if (choice.toLowerCase().equals("o"))
+			else if (choiceToCheckInCheckOut.toLowerCase().equals("o"))
 			{
 				StartCheckout();
 			}
@@ -36,13 +36,13 @@ public class Controller
 
 	}
 
-	private static boolean initialize(String name)
+	private static boolean initialize(String workerName)
 	{
 		System.out.println("worker names: " + FakeDB.getWorkerNames().toString());
-		while (Worker.validateWorker(name) == false)
+		while (Worker.validateWorker(workerName) == false)
 		{
 			StdOut.println("Incorrect worker name. Pelase Enter a valid you worker name: ");
-			name = StdIn.readString();
+			workerName = StdIn.readString();
 		}
 
 		return true;
