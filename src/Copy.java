@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,7 +15,7 @@ public class Copy
 	private Patron outTo;
 	private static Calendar dueDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-	static int DUE_DATE_NUM_MONTHS = 3;
+	static int DUE_DATE_NUM_MONTHS = 3; //number of months used to set the due date of a copy as from when the copy was checked out
 
 	public Copy(String copyID, String title)
 	{
@@ -26,13 +27,8 @@ public class Copy
 	public String toString()
 	{
 
-<<<<<<< HEAD
 		return "Copy Information:: \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName().toString()
 				+ ", Due date: " + this.dueDate.getTime().toString() ;
-=======
-		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: "
-				+ outTo.getName() + " Due date: " + this.dueDate.getTime();
->>>>>>> 7c01235480b48111d50eac28bb5058c7552dc21e
 
 	}
 
@@ -85,6 +81,8 @@ public class Copy
 	public void setdueDate(Calendar date)
 	{
 		this.dueDate = date;
+
+		//this.dueDate = new GregorianCalendar(2018, 1, 1);
 	}
 
 	public static boolean checkCopyOut(Copy c, Patron p)
@@ -92,7 +90,6 @@ public class Copy
 		// check if the copy is currently available before checking it out
 		if (c instanceof Copy && c.getOutTo().getName() == null)
 		{
-<<<<<<< HEAD
 			
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);;
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().add(c);;	
@@ -100,15 +97,6 @@ public class Copy
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
 			
-=======
-			c.setOutTo(p);
-			p.getCopiesOut().add(c);
-			Calendar calendar = new GregorianCalendar();// default is current
-														// date and time
-			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
-			c.setdueDate(calendar);
-
->>>>>>> 7c01235480b48111d50eac28bb5058c7552dc21e
 			return true;
 		}
 
@@ -146,15 +134,13 @@ public class Copy
 		return false;
 
 	}
-
-	public boolean isOverdue()
-	{
+	
+	
+	public boolean isOverdue() {
 		Calendar today = new GregorianCalendar();
-		if (today.after(this.getdueDate()))
-
-		{
-			return true;
-		}
+			if (today.after(this.getdueDate())) { // check if today is after duedate
+				return true;
+			}
 		return false;
 	}
 
