@@ -53,10 +53,11 @@ public class Patron {
 
 	public String toString() {
 
-		return "Patron Inormation::\n\tPatron ID: " + this.patronID + ", Patron name: " + this.getName()
+		return "\nPatron Inormation::\n\tPatron ID: " + this.patronID + ", Patron name: " + this.getName()
 				+ ", Patron copies out: " + this.copiesOut.toString();
 
 	}
+	
 
 	public String getName() {
 		return name;

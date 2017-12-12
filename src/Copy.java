@@ -27,8 +27,8 @@ public class Copy
 	public String toString()
 	{
 
-		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName()
-				+ ", Due date: " + this.dueDate.getTime() ;
+		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName().toString()
+				+ ", Due date: " + this.dueDate.getTime().toString() ;
 
 	}
 
@@ -90,12 +90,12 @@ public class Copy
 		// check if the copy is currently available before checking it out
 		if (c instanceof Copy && c.getOutTo().getName() == null)
 		{
-			c.setOutTo(p);
-			p.getCopiesOut().add(c);
-			//c.getdueDate();
+			
+			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);;
+			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().add(c);;	
 			Calendar calendar = new GregorianCalendar();//default is current date and time
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
-			c.setdueDate(calendar);
+			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
 			
 			return true;
 		}
@@ -110,9 +110,13 @@ public class Copy
 		// check if the Patron returning the book actually checked it out
 		if (c instanceof Copy && c.getOutTo() == p)
 		{
-			c.setOutTo(new Patron(null, null));
-			p.getCopiesOut().remove(c);
-			System.out.println(c.toString());
+			
+			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron(null,null));
+			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
+			
+			//c.setOutTo(p);
+			//p.getCopiesOut().remove(c);
+			//System.out.println(".....adfa.sdf&&&.." + FakeDB.getPatronStore().get(p.getPatronID()).toString());
 
 			return true;
 		}
