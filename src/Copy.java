@@ -27,7 +27,7 @@ public class Copy
 	public String toString()
 	{
 
-		return "Copy Information \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName().toString()
+		return "Copy Information:: \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName().toString()
 				+ ", Due date: " + this.dueDate.getTime().toString() ;
 
 	}
