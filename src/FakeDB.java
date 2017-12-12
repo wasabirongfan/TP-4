@@ -86,11 +86,11 @@ public class FakeDB
 	}
 	
 	public static ArrayList<String> getWorkerNames(){
-		ArrayList<Worker> workers = FakeDB.getWorkerStore();
+		ArrayList<Worker> workerArrayList = FakeDB.getWorkerStore();
 
 		ArrayList<String> workerNames = new ArrayList<>();
-		for (int i = 0; i < workers.size(); i++) {
-			workerNames.add(workers.get(i).getName());
+		for (int i = 0; i < workerArrayList.size(); i++) {
+			workerNames.add(workerArrayList.get(i).getName());
 		}
 		return workerNames;
 
