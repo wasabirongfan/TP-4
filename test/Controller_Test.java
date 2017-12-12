@@ -10,12 +10,11 @@ import org.junit.Test;
 
 public class Controller_Test
 {
+	Patron p = new Patron("P1", "Fan47");
+	Copy c = new Copy("C3", "Fun with Classes");
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-
 	Calendar today = new GregorianCalendar();
-	Copy c = new Copy("C3", "Fun with Classes");
-	Patron p = new Patron("P1", "Fan47");
 
 	@Before
 	public void initialize()
@@ -28,7 +27,7 @@ public class Controller_Test
 	{
 		Patron p1 = new Patron("P1", "Eric");
 		Copy c = new Copy("C1", "Fun with Objects");
-		assertTrue(c instanceof Copy && c.getOutTo().getName() == null);
+		assertTrue(c instanceof Copy && c.getOutTo().getName() == "");
 	}
 
 	@Test
@@ -43,6 +42,16 @@ public class Controller_Test
 	}
 
 	@Test
+	public void test_verifyCopy()
+	{
+		Copy c1 = new Copy("C1", "Fun with Objects");
+		Copy c2 = new Copy("F3", "Have fun anywhere");
+
+		assertTrue("C1 exists", Copy.verifyCopy(c1));
+		assertFalse("F3 does not exists", Copy.verifyCopy(c2));
+	}
+
+	@Test
 	public void test_checkCopyOut()
 	{
 
@@ -51,8 +60,8 @@ public class Controller_Test
 
 		Copy c = new Copy("C1", "Fun with Objects");
 		Copy c1 = FakeDB.getCopy(c.getCopyID());
-		assertTrue("copy C1 checked to P1", Copy.checkCopyOut(c1, p1));
-		assertFalse("copy C1 checked to P1", Copy.checkCopyOut(c1, p2));
+		assertTrue("copy C1 checked out to P1", Copy.checkCopyOut(c1, p1));
+		assertFalse("copy C1 checked out to P1", Copy.checkCopyOut(c1, p2));
 
 	}
 
@@ -68,9 +77,8 @@ public class Controller_Test
 		Patron p2 = new Patron("P2", "Fan47");
 		Copy.checkCopyOut(c1, p2);
 
-		assertFalse("copy C1 checked to P1", Copy.checkCopyIn(c1, p1));
-		assertTrue("copy C1 checked to P1", Copy.checkCopyIn(c1, p2));
-
+		assertFalse("copy C1 checked in to P1", Copy.checkCopyIn(c1, p1));
+		assertTrue("copy C1 checked in to P2", Copy.checkCopyIn(c1, p2));
 	}
 
 	@Test
@@ -104,14 +112,20 @@ public class Controller_Test
 	public void test_hasHold()
 	{
 		Copy c = new Copy("C3", "Fun with Classes");
-		Patron p = new Patron("P1", "Fan47");
+		Patron p = new Patron("P1", "Eric");
+
 		c.checkCopyOut(c, p);
-
+		// c.setOutTo(p);
 		Calendar date = new GregorianCalendar();
+		date.set(1500, 1, 1);
+		c.setdueDate(date);
+		StdOut.print(date.getTime());
+		StdOut.print(c);
+		StdOut.print(p);
 
-		date.add(date.YEAR, -10);
-		Copy c_test = p.getCopiesOut().get(0);
-		p.getCopiesOut().get(0).setdueDate(date);
+		// date.add(date.YEAR, -10);
+		// Copy c_test = p.getCopiesOut().get(0);
+		// p.getCopiesOut().get(0).setdueDate(date);
 
 		assertTrue("the copy is overdue", p.hasHold());
 
