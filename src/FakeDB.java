@@ -1,4 +1,4 @@
- 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,11 +37,9 @@ public class FakeDB
 		copyStore.put("C12", new Copy("C12", "Fun with Classes12"));
 		copyStore.put("C13", new Copy("C13", "Fun with Classes13"));
 
-
 		workerStore.add(new Worker("Fan"));
 		workerStore.add(new Worker("Raymond"));
 		workerStore.add(new Worker("Level"));
-
 
 	}
 
@@ -84,12 +82,14 @@ public class FakeDB
 	{
 		FakeDB.workerStore = workerStore;
 	}
-	
-	public static ArrayList<String> getWorkerNames(){
+
+	public static ArrayList<String> getWorkerNames()
+	{
 		ArrayList<Worker> workers = FakeDB.getWorkerStore();
 
 		ArrayList<String> workerNames = new ArrayList<>();
-		for (int i = 0; i < workers.size(); i++) {
+		for (int i = 0; i < workers.size(); i++)
+		{
 			workerNames.add(workers.get(i).getName());
 		}
 		return workerNames;

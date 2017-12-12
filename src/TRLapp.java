@@ -1,18 +1,21 @@
-import java.util.InputMismatchException;
+public class TRLapp
+{
 
-public class TRLapp {
-
-	public static void main(String[] args) {
-		// Controller.initialize();
+	public static void main(String[] args)
+	{
+		Controller.initialize();
 		int choice = 0;
-		while (true) {
+		while (true)
+		{
 			Controller.showMenu();
-			try {
-				
-				String s = StdIn.readString();  //readString();
+			try
+			{
+
+				String s = StdIn.readString(); // readString();
 				StdOut.println("...choice entered = " + s);
 				choice = Integer.parseInt(s);
-				switch (choice) {
+				switch (choice)
+				{
 				case 1:
 					Controller.StartCheckout();
 					break;
@@ -25,7 +28,9 @@ public class TRLapp {
 				default:
 					StdOut.println("Please enter a valid option");
 				}
-			}catch(NumberFormatException e) {
+			}
+			catch (NumberFormatException e)
+			{
 				StdOut.println("Please enter a valid option");
 			}
 		}

@@ -21,9 +21,11 @@ public class Worker
 	{
 		this.name = name;
 	}
-	
-	public static boolean validateWorker(String name) {
-		if (FakeDB.getWorkerNames().contains(name) == true) {
+
+	public static boolean validateWorker(String name)
+	{
+		if (FakeDB.getWorkerNames().contains(name) == true)
+		{
 			return true;
 		}
 		return false;
