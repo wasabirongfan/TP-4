@@ -1,12 +1,28 @@
 README file for TRL Application 
 
+==============================================================
 *License 
 
 This project is developed by Raymond Mbah and Rong Fan. 
 
+==============================================================
+*Versions
+1.1
 
+==============================================================
+*Release Date
+12/16/2017
+
+==============================================================
 *Description 
 
-TRL application is a simple Java application.
+TRL is a service that allows patrons to check out the books. 
 
+TRL application is a simple Java application.
 This project demonstrates is preconfigured to run on Eclipse. 
+
+==============================================================
+*Configuration 
+
+Configuring the TRL Application is not considered a modification
+for redistribution purposes. 

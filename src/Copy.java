@@ -27,8 +27,8 @@ public class Copy
 	public String toString()
 	{
 
-		return "Copy Information:: \n\tcoppID : " + this.copyID + ", Title: " + this.getTitle() + ", Patron: "
-				+ outTo.getName().toString() + ", Due date: " + this.dueDate.getTime().toString();
+		return "\nCopy ID: " + this.copyID + ", Title: " + this.getTitle() + ", Patron: " + outTo.getName().toString()
+				+ ", Due date: " + this.dueDate.getTime().toString();
 
 	}
 
@@ -89,11 +89,9 @@ public class Copy
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);
-			;
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().add(c);
-			;
 			Calendar calendar = new GregorianCalendar();
-			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);//
+			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
 
 			return true;

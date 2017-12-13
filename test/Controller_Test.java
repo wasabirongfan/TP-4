@@ -114,7 +114,7 @@ public class Controller_Test
 		Copy c = new Copy("C3", "Fun with Classes");
 		Patron p = new Patron("P1", "Eric");
 
-		c.checkCopyOut(c, p);
+		Copy.checkCopyOut(c, p);
 		// c.setOutTo(p);
 		Calendar date = new GregorianCalendar();
 		date.set(1500, 1, 1);
@@ -129,6 +129,16 @@ public class Controller_Test
 
 		assertTrue("the copy is overdue", p.hasHold());
 
+	}
+
+	@Test
+	public void test_verifyWorker()
+	{
+		Worker worker1 = new Worker("Fan");
+		Worker worker2 = new Worker("Rong");
+
+		assertTrue("Fan is a worker", worker1.verifyWorker("Fan"));
+		assertFalse("Rong is not a worker", worker1.verifyWorker("Rong"));
 	}
 
 }
