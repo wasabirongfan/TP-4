@@ -245,6 +245,7 @@ public class Controller
 		return true;
 	}
 
+	/** Verify Patron **/
 	private static void verifyPatron(Patron p1)
 	{
 		while (Patron.verifyPatron(p1) == false)
@@ -256,6 +257,7 @@ public class Controller
 		}
 	}
 
+	/** Verify Copy **/
 	private static Copy verifyCopy(Copy c)
 	{
 		String id;
@@ -274,6 +276,7 @@ public class Controller
 		return c;
 	}
 
+	/** Display Copies **/
 	private static void printCopyStore()
 	{
 		for (String key2 : FakeDB.getCopyStore().keySet())
@@ -282,6 +285,7 @@ public class Controller
 		}
 	}
 
+	/** Display Patrons **/
 	private static void printPatronStore()
 	{
 		for (String key1 : FakeDB.getPatronStore().keySet())
