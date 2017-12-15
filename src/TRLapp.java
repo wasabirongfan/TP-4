@@ -1,22 +1,23 @@
-public class TRLapp
-{
+public class TRLapp {
 
-	public static void main(String[] args)
-	{
-		Controller.initialize();
+	public static void main(String[] args) {
+		String workerName = "";
+		while (Controller.initialize(workerName) == false) {
+			StdOut.println("Pelase Enter you worker name " + FakeDB.getWorkerNames().toString() + ":");
+			workerName = StdIn.readString();
+
+		}
+
 		int choice = 0;
-		while (true)
-		{
+		while (true) {
 			Controller.showMenu();
-			try
-			{
+			try {
 
 				String s = StdIn.readString();
 
 				StdOut.println("...choice entered = " + s);
 				choice = Integer.parseInt(s);
-				switch (choice)
-				{
+				switch (choice) {
 				case 1:
 					StdOut.println("Please enter patron ID: ");
 					String pId = StdIn.readString();
@@ -26,7 +27,7 @@ public class TRLapp
 						String cId = StdIn.readString();
 						Controller.StartCheckout(pId, cId);
 						StdOut.println("Check out another copy? (y/n):");
-					    option = StdIn.readString();
+						option = StdIn.readString();
 
 					}
 					break;
@@ -38,26 +39,42 @@ public class TRLapp
 					while (option1.equals("y")) {
 						StdOut.println("Please enter copy ID: ");
 						String cId1 = StdIn.readString();
-						Controller.startCheckIn(pId1,cId1);
+						Controller.startCheckIn(pId1, cId1);
 						StdOut.println("Check in another copy(y/n)");
 						option1 = StdIn.readString();
 					}
-					
+
 					break;
 				case 3:
-					Controller.searchPatron();
+					StdOut.println("\n...Searching patron...\n");
+					StdOut.println("Please enter patron ID: ");
+					String pId2 = StdIn.readString();
+					if (Controller.searchPatron(pId2)) {
+						StdOut.println(FakeDB.getPatronStore().get(pId2));
+					} else {
+						StdOut.println(
+								("Patron Information:\n\tpatron with id: " + pId2 + " doesn't exist in our database"));
+						StdOut.println("\nPlease enter Patron ID: ");
+					}
 					break;
 				case 4:
-					Controller.searchCopy();
+					StdOut.println("\n...Searching copy...\n");
+					StdOut.println("\nPlease enter copy ID e.g : C1 ");
+					String cId2 = StdIn.readString();
+					if (Controller.searchCopy(cId2)) {
+						StdOut.println(FakeDB.getCopyStore().get(cId2));
+					} else {
+						StdOut.println(
+								"Copy information: \n\tcopy with id: " + cId2 + " doesn't exist in our database");
+						StdOut.println("\nPlease enter Copy ID: ");
+					}
 					break;
 				case 5:
-					Controller.exit();
+					System.exit(0);;
 				default:
 					StdOut.println("Please enter a valid option");
 				}
-			}
-			catch (NumberFormatException e)
-			{
+			} catch (NumberFormatException e) {
 				StdOut.println("Please enter a valid option");
 			}
 		}

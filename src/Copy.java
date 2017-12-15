@@ -111,16 +111,15 @@ public class Copy
 //		if (p.hasHold())
 //			return false;
 
-		StdOut.println("&&&"+c + "&&&\n"+p + "@@@@@@@@@@" + (c.getOutTo() == p) );
 		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron("", ""));
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
-			StdOut.print("...checkin successful...");
+			StdOut.print("...Checkin successful...");
 			return true;
 		}
-		StdOut.println("why is it not false");
+		StdOut.println("...Checkin fails...");
 		return false;
 	}
 

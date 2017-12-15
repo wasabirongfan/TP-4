@@ -21,10 +21,10 @@ public class Patron
 		this.copiesOut = new ArrayList<Copy>();
 	}
 
-	private Calendar GregorianCalendar(int year, int month, int day)
-	{
-		return null;
-	}
+//	private Calendar GregorianCalendar(int year, int month, int day)
+//	{
+//		return null;
+//	}
 
 	public String getPatronID()
 	{
