@@ -75,16 +75,17 @@ public class Patron
 		this.name = name;
 	}
 
-	public static boolean verifyPatron(Patron p)
+	public static boolean verifyPatron(String pId)
 	{
 
-		String pId = p.getPatronID();
-		String pName = p.getName().toString();
+		//String pId =  p.getPatronID();
+		//String pName = FakeDB.getPatronStore().get(pId).getName(); //p.getName().toString();
 
-		if (FakeDB.getPatronStore().containsKey(pId) && (FakeDB.getPatronStore().get(pId).getName().equals(pName)))
+		if (FakeDB.getPatronStore().containsKey(pId))
 		{
 			return true;
 		}
+		StdOut.println("Patron is invalid!!!");
 		return false;
 	}
 
@@ -100,11 +101,12 @@ public class Patron
 
 			if (today.after(copiesOut.get(i).getdueDate()))
 			{
+				StdOut.print( this.getName() + " has hold(s)");
 				return true;
 			}
 
 		}
-
+		//StdOut.print( this.getName() + " has no hold(s)");
 		return false;
 	}
 }

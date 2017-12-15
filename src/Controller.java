@@ -8,47 +8,17 @@
  *
  */
 
-public class Controller
-{
-
-	public static void main1(String[] args)
-	{
-		initialize();
-
-		String choice = "";
-		String pId = "";
-		String cId = "";
-		String option = "";
-		while (!choice.toLowerCase().equals("o") && !choice.toLowerCase().equals("i"))
-		{
-			StdOut.println("what will you like to do: Enter 'i' for checkin or 'o' for checkout");
-			choice = StdIn.readString();
-			if (choice.toLowerCase().equals("i"))
-			{
-				startCheckIn();
-			}
-			else if (choice.toLowerCase().equals("o"))
-			{
-				StartCheckout(pId, cId, option);
-			}
-			else
-				StdOut.println("check in (i) and checkout (o) are the only available functionality for now. "
-						+ "More functionality will be available later");
-		}
-
-	}
+public class Controller {
 
 	/** Initialization **/
-	public static boolean initialize()
-	{
+	public static boolean initialize() {
 		printPatronStore();
 		printCopyStore();
 
 		StdOut.print("Pelase Enter you worker name e.g Fan or Raymond: ");
 		System.out.println("worker names: " + FakeDB.getWorkerNames().toString());
 		String name = StdIn.readString();
-		while (Worker.verifyWorker(name) == false)
-		{
+		while (Worker.verifyWorker(name) == false) {
 			StdOut.println("Incorrect worker name. Pelase Enter a valid you worker name: ");
 			name = StdIn.readString();
 		}
@@ -57,8 +27,7 @@ public class Controller
 	}
 
 	/** Display the main menu **/
-	public static void showMenu()
-	{
+	public static void showMenu() {
 		System.out.println("Menu\n====");
 		System.out.println("Enter 1: To checkout");
 		System.out.println("Enter 2: To checkin");
@@ -69,15 +38,13 @@ public class Controller
 	}
 
 	/** Search Patron **/
-	public static void searchPatron()
-	{
+	public static void searchPatron() {
 
 		StdOut.println("\n...Searching patron...\n");
 		StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
 		Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
 
-		while (Patron.verifyPatron(p1) == false)
-		{
+		while (Patron.verifyPatron(p1.getPatronID()) == false) {
 			System.out.println("Patron Information:\n\tpatron with id: " + p1.getPatronID() + " and name: "
 					+ p1.getName() + " doesn't exist in our database");
 			StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
@@ -90,8 +57,7 @@ public class Controller
 	}
 
 	/** Search Copy **/
-	public static void searchCopy()
-	{
+	public static void searchCopy() {
 		StdOut.println("\n...Searching copy...\n");
 		StdOut.println("\nPlease enter copy ID e.g : C1 ");
 
@@ -99,8 +65,7 @@ public class Controller
 		String title = "";
 		Copy c = new Copy(id, title);
 
-		while (Copy.verifyCopy(c) == false)
-		{
+		while (Copy.verifyCopy(c.getCopyID()) == false) {
 			System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
 					+ " doesn't exist in our database");
 			StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
@@ -114,247 +79,137 @@ public class Controller
 	}
 
 	/** Exit **/
-	public static void exit()
-	{
+	public static void exit() {
 		StdOut.println("...QUITTING TRLApp...");
 		System.exit(1);
 	}
 
 	/** Start Check In Session **/
-	public static boolean startCheckIn()
-	{
-		StdOut.println("...Starting check in session....");
+	public static boolean startCheckIn(String pId1, String cId1) {
 
-		StdOut.println("Please enter Patron ID and name: e.g 'P1 Eric'");
+		if (FakeDB.getPatronStore().get(pId1).hasHold() == true) {
+			return false;
+		} else if ((Copy.verifyCopy(cId1) && Patron.verifyPatron(pId1)) == false) {
+			return false;
+		}
 
-		Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
+		else {
+			Patron p1 = FakeDB.getPatronStore().get(pId1);
 
-		verifyPatron(p1);
+			StdOut.println(FakeDB.getPatronStore().get(pId1).toString());
+			//System.out.println(p1.toString());
+			Copy c1 = FakeDB.getCopy(cId1);
+			StdOut.println("......Checking in " + c1.getTitle() + " to " + p1.getName() + ".");
 
-		String option = "y";
-		while (option.equals("y"))
-		{
-			p1 = FakeDB.getPatronStore().get(p1.getPatronID());
-			System.out.println(p1.toString());
-
-			StdOut.println("\nPlease enter copy ID e.g : C1 ");
-			String id = StdIn.readString();
-			String title = "";
-			Copy c = new Copy(id, title);
-
-			c = verifyCopy(c);
-
-			Copy c1 = FakeDB.getCopyStore().get(c.getCopyID());
-			StdOut.println("......Checking in " + c1.getTitle() + " from " + p1.getName() + ".");
-
-			if (p1.hasHold() == true)
-			{
-				StdOut.print(p1.getName() + " has hold(s)");
+			if (Copy.checkCopyIn(FakeDB.getCopy(cId1), FakeDB.getPatronStore().get(pId1))) {
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				StdOut.println("Check in successfull!.");
+				System.out.println(FakeDB.getPatronStore().get(p1.getPatronID()).toString());
+				StdOut.println(FakeDB.getPatronStore().get(p1.getPatronID()));
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				return true;
+			} else {
 				return false;
 			}
-			else
-			{
-
-				if (Copy.checkCopyIn(c1, p1))
-				{
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					StdOut.println("Check in successfull!.");
-					System.out.println(FakeDB.getPatronStore().get(p1.getPatronID()).toString());
-					StdOut.println(FakeDB.getPatronStore().get(p1.getPatronID()));
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				}
-				else
-				{
-
-				}
-
-			}
-
-			StdOut.println("Check In another copy? (y/n):");
-			option = StdIn.readString();
-
 		}
 
-		return true;
 	}
 
 	/** Start Check Out Session **/
-	public static boolean StartCheckout1()
-	{
-		StdOut.println("...Starting checkout session....");
+	public static boolean StartCheckout(String pId, String cId) {
+		/*
+		 * //verifyPatron(FakeDB.getPatronStore().get(pId)); Patron p1 =
+		 * FakeDB.getPatronStore().get(pId);
+		 * 
+		 * 
+		 * 
+		 * System.out.println(p1.toString()); String title = ""; Copy c = new Copy(cId,
+		 * title); Copy c1 = FakeDB.getCopy(c.getCopyID());
+		 * StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName()
+		 * + ".");
+		 */
 
-		StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
-		Patron p1 = new Patron(StdIn.readString(), StdIn.readString());
-
-		verifyPatron(p1);
-
-		p1 = FakeDB.getPatronStore().get(p1.getPatronID());
-
-		String option = "y";
-		while (option.equals("y"))
-		{
-
-			System.out.println(p1.toString());
-
-			StdOut.println("\nPlease enter copy ID e.g : C1 ");
-			String id = StdIn.readString();
-			String title = "";
-			Copy c = new Copy(id, title);
-
-			c = verifyCopy(c);
-
-			Copy c1 = FakeDB.getCopy(c.getCopyID());
-			StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
-
-			if (p1.hasHold() == true)
-			{
-				StdOut.print(p1.getName() + " has hold(s)");
-			}
-			else
-			{
-
-				if (Copy.checkCopyOut(c1, p1))
-				{
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					StdOut.println("Check out successfull!.");
-					System.out.println(c1.toString());
-					StdOut.println(p1.toString());
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				}
-				else
-				{
-
-				}
-
-			}
-
-			StdOut.println("Check out another copy? (y/n):");
-			option = StdIn.readString();
-
+		if (FakeDB.getPatronStore().get(pId).hasHold() == true) {
+			return false;
+		} else if ((Copy.verifyCopy(cId) && Patron.verifyPatron(pId)) == false) {// if copy or patron is not valid
+			return false;
 		}
 
-		return true;
-	}
+		else {
 
-	/** Start Check Out Session **/
-	public static boolean StartCheckout(String pId, String cId, String option)
-	{
-		// StdOut.println("...Starting checkout session....");
+			StdOut.println("^(((^^^" + cId);
 
-		// StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
+			Patron p1 = FakeDB.getPatronStore().get(pId);
 
-		verifyPatron(FakeDB.getPatronStore().get(pId));
-		Patron p1 = FakeDB.getPatronStore().get(pId);
-
-		// String option = "y";
-		while (option.equals("y"))
-		{
-
+			StdOut.println(FakeDB.getPatronStore().get(pId).toString());
 			System.out.println(p1.toString());
-
-			// StdOut.println("\nPlease enter copy ID e.g : C1 ");
-			// String id = StdIn.readString();
 			String title = "";
 			Copy c = new Copy(cId, title);
-
-			c = verifyCopy(c);
-
 			Copy c1 = FakeDB.getCopy(c.getCopyID());
 			StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
 
-			if (p1.hasHold() == true)
-			{
-				StdOut.print(p1.getName() + " has hold(s)");
+			if (Copy.checkCopyOut(c1, p1)) {
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				StdOut.println("Check out successfull!.");
+				System.out.println(c1.toString());
+				StdOut.println(p1.toString());
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				System.out.printf(
+						"|+++---------------------------------------------------------------------------------------------------+++|\n");
+				return true;
+			} else {
+				return false;
 			}
-			else
-			{
-
-				if (Copy.checkCopyOut(c1, p1))
-				{
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					StdOut.println("Check out successfull!.");
-					System.out.println(c1.toString());
-					StdOut.println(p1.toString());
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-					System.out.printf(
-							"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				}
-				else
-				{
-
-				}
-
-			}
-
-			// StdOut.println("Check out another copy? (y/n):");
-			// option = StdIn.readString();
 
 		}
 
-		return true;
 	}
 
 	/** Verify Patron **/
-	private static void verifyPatron(Patron p1)
-	{
-		while (Patron.verifyPatron(p1) == false)
-		{
-
-			System.out.println("Patron Information:\n\tpatron with id: " + p1.getPatronID() + " and name: "
-					+ p1.getName() + " doesn't exist in our database");
-			StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'");
-		}
-	}
-
+	/*
+	 * private static void verifyPatron(Patron p1) { while (Patron.verifyPatron(p1)
+	 * == false) {
+	 * 
+	 * System.out.println("Patron Information:\n\tpatron with id: " +
+	 * p1.getPatronID() + " and name: " + p1.getName() +
+	 * " doesn't exist in our database");
+	 * StdOut.println("\nPlease enter Patron ID and name: e.g 'P1 Eric'"); } }
+	 */
 	/** Verify Copy **/
-	private static Copy verifyCopy(Copy c)
-	{
-		String id;
-		String title;
-		while (Copy.verifyCopy(c) == false)
-		{
-			System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title: " + c.getTitle()
-					+ " doesn't exist in our database");
-			StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
-			id = StdIn.readString();
-			StdOut.println("Pleae enter title e.g : 'Fun with Objects' ");
-			title = StdIn.readLine();
-			c = new Copy(id, title);
 
-		}
-		return c;
-	}
-
+	/*
+	 * private static boolean verifyCopy(Copy c) { String id; String title; while
+	 * (Copy.verifyCopy(c) == false) { System.out.println("Error:\n\tcopy with id: "
+	 * + c.getCopyID() + " and title: " + c.getTitle() +
+	 * " doesn't exist in our database");
+	 * StdOut.println("\nPlease enter copy ID and title e.g : C1 "); id =
+	 * StdIn.readString();
+	 * StdOut.println("Pleae enter title e.g : 'Fun with Objects' "); title =
+	 * StdIn.readLine(); c = new Copy(id, title);
+	 * 
+	 * } return false; }
+	 */
 	/** Display Copies **/
-	private static void printCopyStore()
-	{
-		for (String key2 : FakeDB.getCopyStore().keySet())
-		{
+	private static void printCopyStore() {
+		for (String key2 : FakeDB.getCopyStore().keySet()) {
 			StdOut.print("\n" + FakeDB.getCopyStore().get(key2) + "\n");
 		}
 	}
 
 	/** Display Patrons **/
-	private static void printPatronStore()
-	{
-		for (String key1 : FakeDB.getPatronStore().keySet())
-		{
+	private static void printPatronStore() {
+		StdOut.print("Datebase information as displayed: \n==========================================");
+		for (String key1 : FakeDB.getPatronStore().keySet()) {
 			StdOut.print(FakeDB.getPatronStore().get(key1) + "\n");
 		}
 	}

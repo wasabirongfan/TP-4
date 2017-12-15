@@ -12,7 +12,8 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private static Calendar dueDate;
+	private static Calendar dueDate = new GregorianCalendar() ;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
 	static int DUE_DATE_NUM_MONTHS = 3;
 
@@ -21,7 +22,7 @@ public class Copy
 		this.copyID = copyID;
 		this.setTitle(title);
 		this.outTo = new Patron("", "");
-		this.dueDate = new GregorianCalendar();
+		//this.dueDate = new GregorianCalendar();
 	}
 
 	public String toString()
@@ -48,9 +49,11 @@ public class Copy
 		return outTo;
 	}
 
-	public void setOutTo(Patron outTo)
+	public void setOutTo(Patron p)
 	{
-		this.outTo = outTo;
+		
+		this.outTo = p;
+		FakeDB.getCopyStore().get(this.copyID).outTo = p; //update db
 	}
 
 	public String getTitle()
@@ -85,7 +88,8 @@ public class Copy
 
 	public static boolean checkCopyOut(Copy c, Patron p)
 	{
-		if (c instanceof Copy && c.getOutTo().getName() == "")
+		
+		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy ) && (c.getOutTo().getName()).equals(""))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);
@@ -94,9 +98,9 @@ public class Copy
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
 			StdOut.println("..?????.checkout successfull....");
+
 			return true;
 		}
-
 		return false;
 	}
 
@@ -104,28 +108,32 @@ public class Copy
 	{
 		System.out.println("...Starting checking in " + c.getTitle());
 
-		if (p.hasHold())
-			return false;
+//		if (p.hasHold())
+//			return false;
 
-		if (c instanceof Copy && c.getOutTo() == p)
+		StdOut.println("&&&"+c + "&&&\n"+p + "@@@@@@@@@@" + (c.getOutTo() == p) );
+		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron("", ""));
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
-
+			StdOut.print("...checkin successful...");
 			return true;
 		}
-
+		StdOut.println("why is it not false");
 		return false;
 	}
 
-	public static boolean verifyCopy(Copy c)
+	public static boolean verifyCopy(String cId)
 	{
-
-		if (FakeDB.getCopyStore().containsKey(c.getCopyID()))
+		//StdOut.println("----" + c);
+		if (FakeDB.getCopyStore().containsKey(cId))
 		{
+			//StdOut.println("***" + c.getCopyID());
+			StdOut.println("truuu......");
 			return true;
 		}
+		StdOut.println("Invalid copy!!!");
 		return false;
 
 	}

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class Controller_Test
 {
-	Patron p = new Patron("P1", "Fan47");
+	Patron p = new Patron("P2", "Fan47");
 	Copy c = new Copy("C3", "Fun with Classes");
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
@@ -22,7 +22,7 @@ public class Controller_Test
 	@Before
 	public void initialize()
 	{
-		c.checkCopyOut(c, p);
+		//c.checkCopyOut(c, p);
 	}
 
 	@Test
@@ -37,10 +37,10 @@ public class Controller_Test
 	public void test_verifyPatron()
 	{
 		Patron p1 = new Patron("P1", "Eric");
-		Patron p2 = new Patron("P2", "Rong");
+		Patron p2 = new Patron("P22", "Rong");
 
-		assertTrue("P1 exists", Patron.verifyPatron(p1));
-		assertFalse("P2 does not exists", Patron.verifyPatron(p2));
+		assertTrue("P1 exists", Patron.verifyPatron(p1.getPatronID()));
+		assertFalse("P2 does not exists", Patron.verifyPatron(p2.getPatronID()));
 
 	}
 
@@ -52,9 +52,9 @@ public class Controller_Test
 		Copy c3 = new Copy("C3", "More fun with Obejcts");
 		c3.setCopyID("C4");
 
-		assertTrue("C1 exists", Copy.verifyCopy(c1));
-		assertFalse("F3 does not exists", Copy.verifyCopy(c2));
-		assertTrue("C4 does not exist", Copy.verifyCopy(c3));
+		assertTrue("C1 exists", Copy.verifyCopy(c1.getCopyID()));
+		assertFalse("F3 does not exists", Copy.verifyCopy(c2.getCopyID()));
+		assertTrue("C4 does not exist", Copy.verifyCopy(c3.getCopyID()));
 	}
 
 	@Test
@@ -62,7 +62,7 @@ public class Controller_Test
 	{
 
 		Patron p1 = new Patron("P1", "Eric");
-		Patron p2 = new Patron("P2", "Rong");
+		Patron p2 = new Patron("P2", "Raymond47");
 
 		Copy c = new Copy("C1", "Fun with Objects");
 		Copy c1 = FakeDB.getCopy(c.getCopyID());
@@ -203,5 +203,30 @@ public class Controller_Test
 		// assertTrue("workerStore is the same as workerStore",
 		// FakeDB.getWorkerStore().equals(workerStore));
 	}
+	
+	
+	
+	@Test
+	public void test_startcheckout() {
+		Patron p1 = new Patron("P1", "Eric");
+		Copy c1 = new Copy("C6", "Fun with Objects");
+		Copy f2 = new Copy("FF3", "Fun with Objects");
+		
+		StdOut.println("++****+" + f2.getCopyID());
+		assertTrue("startcheckout successful",Controller.StartCheckout(p1.getPatronID(), c1.getCopyID()));
+		assertFalse("startcheck out fail", Controller.StartCheckout(p1.getPatronID(), f2.getCopyID()));
+		StdOut.println("+++" + p1);
 
+	}
+
+	@Test
+	public void test_startcheckin() {
+		Patron p1 = new Patron ("P1","Eric");
+		Copy c1 = new Copy("C1", "Fun with Objects");
+		Copy c2 = new Copy ("C2", "More fun with Objects");
+		Copy.checkCopyOut(c1, p1);
+		
+		assertTrue("",Controller.startCheckIn(p1.getPatronID(), c1.getCopyID()));
+		assertFalse("", Controller.startCheckIn(p1.getPatronID(), c2.getCopyID()));
+	}
 }
