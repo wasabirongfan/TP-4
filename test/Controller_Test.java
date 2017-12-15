@@ -79,12 +79,15 @@ public class Controller_Test
 
 		Copy c = new Copy("C1", "Fun with Objects");
 		Copy c1 = FakeDB.getCopy(c.getCopyID());
+		Copy c22 = new Copy("C2", "More Fun with Object");
+
+		Copy c2 = FakeDB.getCopy(c22.getCopyID()); //
 
 		Patron p2 = new Patron("P2", "Fan47");
-		Copy.checkCopyOut(c1, p2);
+		Copy.checkCopyOut(c2, p2);
 
 		assertFalse("copy C1 checked in to P1", Copy.checkCopyIn(c1, p1));
-		assertTrue("copy C1 checked in to P2", Copy.checkCopyIn(c1, p2));
+		assertTrue("copy C2 checked in to P2", Copy.checkCopyIn(c2, p2));
 	}
 
 	@Test
@@ -111,7 +114,6 @@ public class Controller_Test
 		Patron p = new Patron("P1", "Fan47");
 		c.checkCopyOut(c, p);
 		assertFalse("P1 does not have holds", p.hasHold());
-		StdOut.println("done testing does not have holds");
 	}
 
 	@Test
@@ -121,19 +123,22 @@ public class Controller_Test
 		Patron p = new Patron("P1", "Eric");
 
 		Copy.checkCopyOut(c, p);
-		// c.setOutTo(p);
 		Calendar date = new GregorianCalendar();
 		date.set(1500, 1, 1);
+
 		c.setdueDate(date);
-		StdOut.print(date.getTime());
-		StdOut.print(c);
-		StdOut.print(p);
+		StdOut.println(date.getTime());
+		StdOut.println(c);
+		c.setOutTo(p);
+		StdOut.print(FakeDB.getPatronStore().get(p.getPatronID()));
+		StdOut.println(p);// "...." + p.getPatronID() + "..." +
+							// FakeDB.getCopyStore().get("P1"));
 
 		// date.add(date.YEAR, -10);
 		// Copy c_test = p.getCopiesOut().get(0);
 		// p.getCopiesOut().get(0).setdueDate(date);
 
-		assertTrue("the copy is overdue", p.hasHold());
+		assertTrue("the copy is overdue", FakeDB.getPatronStore().get(p.getPatronID()).hasHold());
 
 	}
 

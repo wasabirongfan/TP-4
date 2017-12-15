@@ -93,7 +93,7 @@ public class Copy
 			Calendar calendar = new GregorianCalendar();
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
-
+			StdOut.println("..?????.checkout successfull....");
 			return true;
 		}
 
@@ -103,6 +103,9 @@ public class Copy
 	public static boolean checkCopyIn(Copy c, Patron p)
 	{
 		System.out.println("...Starting checking in " + c.getTitle());
+
+		if (p.hasHold())
+			return false;
 
 		if (c instanceof Copy && c.getOutTo() == p)
 		{
