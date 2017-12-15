@@ -22,7 +22,6 @@ public class Copy
 		this.copyID = copyID;
 		this.setTitle(title);
 		this.outTo = new Patron("", "");
-		//this.dueDate = new GregorianCalendar();
 	}
 
 	public String toString()
@@ -53,7 +52,7 @@ public class Copy
 	{
 		
 		this.outTo = p;
-		FakeDB.getCopyStore().get(this.copyID).outTo = p; //update db
+		FakeDB.getCopyStore().get(this.copyID).outTo = p; 
 	}
 
 	public String getTitle()
@@ -108,14 +107,12 @@ public class Copy
 	{
 		System.out.println("...Starting checking in " + c.getTitle());
 
-//		if (p.hasHold())
-//			return false;
-
 		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron("", ""));
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
+			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(new GregorianCalendar());
 			StdOut.print("...Checkin successful...");
 			return true;
 		}
@@ -125,10 +122,8 @@ public class Copy
 
 	public static boolean verifyCopy(String cId)
 	{
-		//StdOut.println("----" + c);
 		if (FakeDB.getCopyStore().containsKey(cId))
 		{
-			//StdOut.println("***" + c.getCopyID());
 			StdOut.println("truuu......");
 			return true;
 		}

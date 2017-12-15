@@ -22,23 +22,15 @@ public class Patron
 		this.copiesOut = new ArrayList<Copy>();
 		this.hasHolds = false;
 	}
-
-//	private Calendar GregorianCalendar(int year, int month, int day)
-//	{
-//		return null;
-//	}
-	
 	
 	public boolean getHasHolds()
 	{
-		//processHolds();
 		return this.hasHolds;
 	}
 
 	public void setHasHolds(boolean b)
 	{
 		this.hasHolds = b;
-		StdOut.println("^^"+ this.hasHolds);
 	}
 
 	public String getPatronID()
@@ -93,9 +85,6 @@ public class Patron
 	public static boolean verifyPatron(String pId)
 	{
 
-		//String pId =  p.getPatronID();
-		//String pName = FakeDB.getPatronStore().get(pId).getName(); //p.getName().toString();
-
 		if (FakeDB.getPatronStore().containsKey(pId))
 		{
 			return true;
@@ -122,7 +111,6 @@ public class Patron
 			}
 
 		}
-		//StdOut.print( this.getName() + " has no hold(s)");
 		this.hasHolds = false;
 		return false;
 	}

@@ -32,6 +32,7 @@ public class Controller_Test
 		Patron p1 = new Patron("P1", "Eric");
 		Copy c1 = new Copy("C6", "Fun with Objects");
 		Copy f2 = new Copy("FF3", "Fun with Objects");
+		Copy c3 = new Copy("C3", "Fun with classes");
 		Patron p2 = new Patron("C1", "Rong");
 		
 		assertFalse("", Controller.StartCheckout(p2.getPatronID(), c1.getCopyID()));
@@ -40,9 +41,11 @@ public class Controller_Test
 		
 		p1.setHasHolds(true);
 		assertFalse("startcheck out fail", Controller.StartCheckout(p1.getPatronID(), f2.getCopyID()));
+		
+		Patron p3 = new Patron("P3", "Fan47");
+		Copy c4 = new Copy("C4", "Fun with Classes4");
+		c4.setdueDate(new GregorianCalendar(1700,1,1));
 
-		
-		
 	}
 
 	@Test
@@ -50,12 +53,14 @@ public class Controller_Test
 		Patron p1 = new Patron ("P1","Eric");
 		Copy c1 = new Copy("C1", "Fun with Objects");
 		Copy c2 = new Copy ("C2", "More fun with Objects");
+		Copy c3 = new Copy("C10000", "Fun fun fun");
 		Patron p2 = new Patron("P1000", "Eric");
 		Copy.checkCopyOut(c1, p1);
 		
 		assertTrue("",Controller.startCheckIn(p1.getPatronID(), c1.getCopyID()));
 		assertFalse("", Controller.startCheckIn(p1.getPatronID(), c2.getCopyID()));
 		assertFalse("", Controller.startCheckIn(p2.getPatronID(), c1.getCopyID()));
+		assertFalse("", Controller.startCheckIn(p2.getPatronID(), c3.getCopyID()));
 	}
 	
 	@Test
