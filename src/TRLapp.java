@@ -12,12 +12,16 @@ public class TRLapp
 			{
 
 				String s = StdIn.readString();
+				String pId = StdIn.readString();
+				String cId = StdIn.readString();
+				String option = StdIn.readString();
 				StdOut.println("...choice entered = " + s);
 				choice = Integer.parseInt(s);
 				switch (choice)
 				{
 				case 1:
-					Controller.StartCheckout();
+
+					Controller.StartCheckout(pId, cId, option);
 					break;
 				case 2:
 					Controller.startCheckIn();
@@ -39,6 +43,7 @@ public class TRLapp
 				StdOut.println("Please enter a valid option");
 			}
 		}
+
 	}
 
 }
