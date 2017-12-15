@@ -26,6 +26,25 @@ public class Patron_Test {
 
 	}
 	
+	
+	@Test
+	public void test_holds()
+	{
+		Patron p1 = new Patron("P1", "Eric");
+		Patron p2 = new Patron("P22", "Rong");
+		
+		p1.setHasHolds(true); 
+		StdOut.print("%%%%" + p1.getHasHolds());
+		assertTrue("p1 has holds", p1.getHasHolds());
+		assertFalse("p2 has holds", p2.getHasHolds());
+		
+		p1.setHasHolds(false);
+		assertFalse("p1 does not has holds", p1.getHasHolds());
+
+	}
+	
+	
+	
 	@Test
 	public void test_does_not_hasHold()
 	{
@@ -33,7 +52,7 @@ public class Patron_Test {
 		Copy c = new Copy("C3", "Fun with Classes");
 		Patron p = new Patron("P1", "Fan47");
 		c.checkCopyOut(c, p);
-		assertFalse("P1 does not have holds", p.hasHold());
+		assertFalse("P1 does not have holds", p.processHolds());
 	}
 
 	@Test
@@ -58,7 +77,7 @@ public class Patron_Test {
 		// Copy c_test = p.getCopiesOut().get(0);
 		// p.getCopiesOut().get(0).setdueDate(date);
 
-		assertTrue("the copy is overdue", FakeDB.getPatronStore().get(p.getPatronID()).hasHold());
+		assertTrue("the copy is overdue", FakeDB.getPatronStore().get(p.getPatronID()).processHolds());
 
 	}
 

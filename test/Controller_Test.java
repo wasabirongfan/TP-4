@@ -32,10 +32,17 @@ public class Controller_Test
 		Patron p1 = new Patron("P1", "Eric");
 		Copy c1 = new Copy("C6", "Fun with Objects");
 		Copy f2 = new Copy("FF3", "Fun with Objects");
+		Patron p2 = new Patron("C1", "Rong");
 		
+		assertFalse("", Controller.StartCheckout(p2.getPatronID(), c1.getCopyID()));
 		assertTrue("startcheckout successful",Controller.StartCheckout(p1.getPatronID(), c1.getCopyID()));
 		assertFalse("startcheck out fail", Controller.StartCheckout(p1.getPatronID(), f2.getCopyID()));
+		
+		p1.setHasHolds(true);
+		assertFalse("startcheck out fail", Controller.StartCheckout(p1.getPatronID(), f2.getCopyID()));
 
+		
+		
 	}
 
 	@Test

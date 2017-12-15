@@ -100,8 +100,8 @@ public class Controller {
 
 	/** Start Check In Session **/
 	public static boolean startCheckIn(String pId1, String cId1) {
-
-		if (Patron.verifyPatron(pId1) && FakeDB.getPatronStore().get(pId1).hasHold() == true) {
+		
+		if (Patron.verifyPatron(pId1) &&  FakeDB.getPatronStore().get(pId1).processHolds() &&  FakeDB.getPatronStore().get(pId1).getHasHolds() == true) {
 			return false;
 		} else if ((Copy.verifyCopy(cId1) && Patron.verifyPatron(pId1)) == false) {
 			return false;
@@ -148,8 +148,9 @@ public class Controller {
 		 * StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName()
 		 * + ".");
 		 */
-
-		if (Patron.verifyPatron(pId) && (FakeDB.getPatronStore().get(pId).hasHold()) == true) {
+		//FakeDB.getPatronStore().get(pId1).processHolds() &&  FakeDB.getPatronStore().get(pId1).getHasHolds() == true
+		
+		if (Patron.verifyPatron(pId) && (FakeDB.getPatronStore().get(pId).getHasHolds()) == true) {
 			return false;
 		} else if ((Copy.verifyCopy(cId) && Patron.verifyPatron(pId)) == false) {// if copy or patron is not valid
 			return false;

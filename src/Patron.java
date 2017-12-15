@@ -13,18 +13,33 @@ public class Patron
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
 	private static Calendar today = new GregorianCalendar();
+	private boolean hasHolds;
 
 	public Patron(String id, String name)
 	{
 		this.patronID = id;
 		this.setName(name);
 		this.copiesOut = new ArrayList<Copy>();
+		this.hasHolds = false;
 	}
 
 //	private Calendar GregorianCalendar(int year, int month, int day)
 //	{
 //		return null;
 //	}
+	
+	
+	public boolean getHasHolds()
+	{
+		//processHolds();
+		return this.hasHolds;
+	}
+
+	public void setHasHolds(boolean b)
+	{
+		this.hasHolds = b;
+		StdOut.println("^^"+ this.hasHolds);
+	}
 
 	public String getPatronID()
 	{
@@ -89,7 +104,7 @@ public class Patron
 		return false;
 	}
 
-	public boolean hasHold()
+	public boolean processHolds()
 	{
 		Calendar today = new GregorianCalendar();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
@@ -102,11 +117,13 @@ public class Patron
 			if (today.after(copiesOut.get(i).getdueDate()))
 			{
 				StdOut.print( this.getName() + " has hold(s)");
+				this.hasHolds = true;
 				return true;
 			}
 
 		}
 		//StdOut.print( this.getName() + " has no hold(s)");
+		this.hasHolds = false;
 		return false;
 	}
 }
