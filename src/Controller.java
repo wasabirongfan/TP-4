@@ -39,7 +39,8 @@ public class Controller {
 		System.out.println("Enter 2: To checkin");
 		System.out.println("Enter 3: To search patron");
 		StdOut.println("Enter 4: To search copy");
-		StdOut.println("Enter 5: To exit");
+		StdOut.println("Enter 5: To set hold");
+		StdOut.println("Enter 6: To exit");
 		return true;
 
 	}
@@ -75,25 +76,7 @@ public class Controller {
 		} else {
 			return false;
 		}
-		// StdOut.println("\n...Searching copy...\n");
-		// StdOut.println("\nPlease enter copy ID e.g : C1 ");
-		//
-		// String id = StdIn.readString();
-		// String title = "";
-		// Copy c = new Copy(id, title);
-		//
-		// while (Copy.verifyCopy(c.getCopyID()) == false) {
-		// System.out.println("Error:\n\tcopy with id: " + c.getCopyID() + " and title:
-		// " + c.getTitle()
-		// + " doesn't exist in our database");
-		// StdOut.println("\nPlease enter copy ID and title e.g : C1 ");
-		// id = StdIn.readString();
-		// title = "";
-		// c = new Copy(id, title);
-		//
-		// }
-		//
-		// StdOut.println(FakeDB.getCopyStore().get(c.getCopyID()));
+
 	}
 
 
@@ -227,5 +210,19 @@ public class Controller {
 		for (String key1 : FakeDB.getPatronStore().keySet()) {
 			StdOut.print(FakeDB.getPatronStore().get(key1) + "\n");
 		}
+	}
+	
+	public static boolean setHolds(String pId, String value) {
+		boolean b;
+		if( Patron.verifyPatron(pId) ) {
+			if (value.equals("t") ){
+				b = true;
+			}else {
+				b = false;
+			}
+			FakeDB.getPatron(pId).setHasHolds(b);
+			return true;
+		}
+		return false;
 	}
 }

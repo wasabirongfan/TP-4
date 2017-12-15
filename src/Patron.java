@@ -76,7 +76,7 @@ public class Patron
 	{
 
 		return "\nPatron Inormation::\n\tPatron ID: " + this.patronID + ", Patron name: " + this.getName()
-				+ ", Patron copies out: " + this.copiesOut.toString();
+				+ " has holds: " + this.hasHolds +  ", Patron copies out: " + this.copiesOut.toString();
 
 	}
 

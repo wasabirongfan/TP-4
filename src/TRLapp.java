@@ -70,6 +70,23 @@ public class TRLapp {
 					}
 					break;
 				case 5:
+					StdOut.println("Please enter patron ID: ");
+					String pId3 = StdIn.readString();
+					StdOut.println("Please enter hold value [t/f]: ");
+
+					String value = StdIn.readString();
+					
+					if( Controller.setHolds(pId3, value) ) {
+						StdOut.println("holds updated!!!");
+						StdOut.println(FakeDB.getPatronStore().get(pId3));
+
+					}else{
+						StdOut.println("Can't update holds");
+
+					};
+					break;
+				
+				case 6:
 					System.exit(0);;
 				default:
 					StdOut.println("Please enter a valid option");

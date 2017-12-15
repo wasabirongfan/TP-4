@@ -73,6 +73,15 @@ public class Controller_Test
 	}
 	
 	@Test
+	public void test_sethold() {
+		Patron p1 = new Patron ("P1","Eric");
+		Patron p2 = new Patron("F2", "Eric");
+		assertTrue("", Controller.setHolds(p1.getPatronID(), "t"));
+		assertTrue("", Controller.setHolds(p1.getPatronID(), "f"));
+		assertFalse("", Controller.setHolds(p2.getPatronID(), "t"));
+	}
+	
+	@Test
 	public void test_exit() {
 		assertTrue(true);
 	}
