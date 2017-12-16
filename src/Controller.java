@@ -31,7 +31,7 @@ public class Controller
 	/** Display the main menu **/
 	public static boolean showMenu()
 	{
-		System.out.println("Menu\n====");
+		System.out.println("\nMenu\n===============");
 		System.out.println("Enter 1: To checkout");
 		System.out.println("Enter 2: To checkin");
 		System.out.println("Enter 3: To search patron");
@@ -58,12 +58,10 @@ public class Controller
 		}
 		else
 		{
-			StdOut.println(
-					("Patron Information:\n\tpatron with id: " + pId + " doesn't exist in our database"));
-			//StdOut.println("\nPlease enter Patron ID (e.g. P1): ");
+			StdOut.println("\n======================================================================");
+			StdOut.println(("Patron Information:\n\tpatron with id: " + pId + " doesn't exist in our database"));
 			return false;
 		}
-		
 
 	}
 
@@ -78,12 +76,12 @@ public class Controller
 		}
 		else
 		{
-			StdOut.println(
-			"Copy information: \n\tcopy with id: " + cId + " doesn't exist in our database");
+			StdOut.println("\n======================================================================");
+			StdOut.println("Copy information: \n\tcopy with id: " + cId + " doesn't exist in our database");
+			StdOut.println("\n======================================================================");
 			StdOut.println("\nPlease enter Copy ID: ");
 			return false;
 		}
-	
 
 	}
 
@@ -107,15 +105,16 @@ public class Controller
 
 			StdOut.println(FakeDB.getPatronStore().get(pId1).toString());
 			Copy c1 = FakeDB.getCopy(cId1);
-			StdOut.println("......Checking in " + c1.getTitle() + " to " + p1.getName() + ".");
+			StdOut.println("\n======================================================================");
+			StdOut.println("Checking in " + c1.getTitle() + " to " + p1.getName());
 
 			if (Copy.checkCopyIn(FakeDB.getCopy(cId1), FakeDB.getPatronStore().get(pId1)))
 			{
 				System.out.printf(
 						"|+++---------------------------------------------------------------------------------------------------+++|\n");
 				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				StdOut.println("Check in successfull!.");
+						"|+++---------------------------------------------------------------------------------------------------+++|\n\n");
+				StdOut.println("***********************Check in successful***********************");
 				System.out.println(FakeDB.getPatronStore().get(p1.getPatronID()).toString());
 				StdOut.println(FakeDB.getPatronStore().get(p1.getPatronID()));
 				System.out.printf(
@@ -157,15 +156,16 @@ public class Controller
 			String title = "";
 			Copy c = new Copy(cId, title);
 			Copy c1 = FakeDB.getCopy(c.getCopyID());
-			StdOut.println("......Checking out " + c1.getTitle() + " to " + p1.getName() + ".");
+			StdOut.println("\n======================================================================");
+			StdOut.println("Checking out " + c1.getTitle() + " to " + p1.getName());
 
 			if (Copy.checkCopyOut(c1, p1))
 			{
 				System.out.printf(
 						"|+++---------------------------------------------------------------------------------------------------+++|\n");
 				System.out.printf(
-						"|+++---------------------------------------------------------------------------------------------------+++|\n");
-				StdOut.println("Check out successfull!.");
+						"|+++---------------------------------------------------------------------------------------------------+++|\n\n");
+				StdOut.println("***********************Check out successful*************************");
 				System.out.println(c1.toString());
 				StdOut.println(p1.toString());
 				System.out.printf(
@@ -195,7 +195,7 @@ public class Controller
 	/** Display Patrons **/
 	private static void printPatronStore()
 	{
-		StdOut.print("Datebase information as displayed: \n==========================================");
+		StdOut.println("\n======================================================================");
 		for (String key1 : FakeDB.getPatronStore().keySet())
 		{
 			StdOut.print(FakeDB.getPatronStore().get(key1) + "\n");
@@ -217,59 +217,87 @@ public class Controller
 				b = false;
 			}
 			FakeDB.getPatron(pId).setHasHolds(b);
-			
-			StdOut.println("...Holds updated...");
+			StdOut.println("\n======================================================================");
+			StdOut.println("Holds updated");
 			StdOut.println(FakeDB.getPatronStore().get(pId));
-			
+
 			return true;
 		}
-		StdOut.println("...Sorry, can't update holds...");
+		StdOut.println("\n======================================================================");
+		StdOut.println("Sorry, can't update holds");
 		return false;
 	}
-	
-	
-	public static boolean addCopy(String cId, String title) {
-		if (Copy.addCopy(cId, title)) {
-			StdOut.println(title + " successfully added");
+
+	/** Add Copy **/
+	public static boolean addCopy(String cId, String title)
+	{
+		if (Copy.addCopy(cId, title))
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println(title + "Copy is added to Database");
 			StdOut.println(FakeDB.getCopyStore().get(cId));
 			return true;
-		} else {
-			StdOut.println("...Sorry copy not added");
+		}
+		else
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println("Sorry Copy is not added to Database");
 			return false;
 		}
 	}
 
-	public static boolean removeCopy(String cId) {
-		if (Copy.removeCopy(cId)) {
-			StdOut.println(cId + " ....successfully removed");
+	/** Remove Copy **/
+	public static boolean removeCopy(String cId)
+	{
+		if (Copy.removeCopy(cId))
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println(cId + "Copy is removed from Database");
 			return true;
-		} else {
-			StdOut.println("Sorry copy not removed. Probably it doesn't exists");
+		}
+		else
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println("Sorry copy not removed from Database");
 			return false;
 		}
-		
+
 	}
 
-	public static boolean addPatron(String pId, String name) {
-		if (Patron.addPatron(pId, name)) {
-			StdOut.println(name + " successfully added");
+	/** Add Patron **/
+	public static boolean addPatron(String pId, String name)
+	{
+		if (Patron.addPatron(pId, name))
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println(name + "Patron is added to Database");
 			StdOut.println(FakeDB.getPatronStore().get(pId));
 			return true;
-		} else {
-			StdOut.println("...Sorry Patron not added.");
+		}
+		else
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println("Sorry is not added to Database");
 			return false;
 		}
-		
+
 	}
 
-	public static boolean removePatron(String pId) {
-		if (Patron.removePatron(pId)) {
-			StdOut.println(pId + " ....successfully removed");
+	/** Remove Patron **/
+	public static boolean removePatron(String pId)
+	{
+		if (Patron.removePatron(pId))
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println(pId + "Patron is removed from Database");
 			return true;
-		} else {
-			StdOut.println("....Sorry Patron not removed. Probably it doesn't exists");
+		}
+		else
+		{
+			StdOut.println("\n======================================================================");
+			StdOut.println("Sorry Patron is not removed from Database (Patron does not exist)");
 			return false;
 		}
-		
+
 	}
 }

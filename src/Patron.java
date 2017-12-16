@@ -82,18 +82,21 @@ public class Patron
 		this.name = name;
 	}
 
+	/** Verify if Patron is in the database */
 	public static boolean verifyPatron(String pId)
 	{
 
 		if (FakeDB.getPatronStore().containsKey(pId))
 		{
-			StdOut.println("Valid patron");
+			// StdOut.println("Valid patron");
 			return true;
 		}
-		StdOut.println("Invalid patron");
+		StdOut.println("\n======================================================================");
+		StdOut.println("...Patron does not exist in Database...");
 		return false;
 	}
 
+	/** Verify if Patron has holds */
 	public boolean processHolds()
 	{
 		Calendar today = new GregorianCalendar();
@@ -115,26 +118,32 @@ public class Patron
 		this.hasHolds = false;
 		return false;
 	}
-	
-	public static boolean addPatron(String id, String name) {
-		// TODO Auto-generated method stub
-		Patron newPatron = new Patron(id,name);
-//		if(FakeDB.getPatronStore().containsValue(newPatron)) {
-		if(Patron.verifyPatron(id)) {
-			StdOut.println("...Patron with id = " + id + " already exists");
+
+	/** Add Patron to the Database */
+	public static boolean addPatron(String id, String name)
+	{
+		Patron newPatron = new Patron(id, name);
+		if (Patron.verifyPatron(id))
+		{
+			StdOut.print("\n======================================================================\n");
+			StdOut.println("...Patron with ID = " + id + " already exists");
 			return false;
 		}
 		FakeDB.getPatronStore().put(id, newPatron);
 		return true;
 	}
 
-	public static boolean removePatron(String id) {
-				
-				if(Patron.verifyPatron(id)) {
-					FakeDB.getPatronStore().remove(id, FakeDB.getPatron(id));
-					return true;
-				}
-				StdOut.println("...Error: Patron with id = " + id + " can not be verified");
-				return false;
+	/** Remove Patron from the Database */
+	public static boolean removePatron(String id)
+	{
+
+		if (Patron.verifyPatron(id))
+		{
+			FakeDB.getPatronStore().remove(id, FakeDB.getPatron(id));
+			return true;
+		}
+		StdOut.print("\n======================================================================\n");
+		StdOut.println("...Error: Patron with ID = " + id + " can not be verified");
+		return false;
 	}
 }

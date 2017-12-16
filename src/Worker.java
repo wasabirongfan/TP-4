@@ -1,6 +1,8 @@
 /**
  * @author Raymond Mbah & Rong Fan
- *
+ * 
+ * 
+ * 
  */
 
 public class Worker
@@ -22,6 +24,7 @@ public class Worker
 		this.name = name;
 	}
 
+	/** Verify if worker is in the database */
 	public static boolean verifyWorker(String name)
 	{
 		if (FakeDB.getWorkerNames().contains(name) == true)

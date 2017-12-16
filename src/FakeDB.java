@@ -9,8 +9,13 @@ import java.util.Map;
  */
 public class FakeDB
 {
+	// Patron Database
 	private static Map<String, Patron> patronStore;
+
+	// Copy Database
 	private static Map<String, Copy> copyStore;
+
+	// Worker Database
 	private static ArrayList<Worker> workerStore;
 
 	static

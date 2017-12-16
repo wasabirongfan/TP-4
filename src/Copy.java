@@ -85,6 +85,7 @@ public class Copy
 		this.dueDate = date;
 	}
 
+	/** Check Out Copy */
 	public static boolean checkCopyOut(Copy c, Patron p)
 	{
 
@@ -96,18 +97,17 @@ public class Copy
 			Calendar calendar = new GregorianCalendar();
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
-			StdOut.println("...Checkout successfull....");
 
 			return true;
 		}
-		StdOut.println("...Checkout fails...");
+		StdOut.println("\n======================================================================");
+		StdOut.println("...Checkout fails (copy is already checked out)...");
 		return false;
 	}
 
+	/** Check In Copy */
 	public static boolean checkCopyIn(Copy c, Patron p)
 	{
-		System.out.println("...Starting checking in " + c.getTitle());
-
 		if (verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
 		{
 
@@ -122,20 +122,25 @@ public class Copy
 			StdOut.print("...Checkin successful...");
 			return true;
 		}
-		StdOut.println("...Checkin fails...");
+		StdOut.println("\n======================================================================");
+		StdOut.println("...Checkin fails (copy is not checked out)...");
 		return false;
 	}
 
+	/** Verify if Copy is in the database */
 	public static boolean verifyCopy(String cId)
 	{
 		if (FakeDB.getCopyStore().containsKey(cId))
 		{
 			return true;
 		}
+		StdOut.println("\n======================================================================");
+		StdOut.println("Copy does not exist in Database");
 		return false;
 
 	}
 
+	/** Verify if Copy is overdue */
 	public boolean isOverdue()
 	{
 		Calendar today = new GregorianCalendar();
@@ -146,26 +151,30 @@ public class Copy
 		return false;
 	}
 
-	public static boolean addCopy(String id, String title2) {
-		// TODO Auto-generated method stub
-		Copy newCopy = new Copy(id,title2);
-		if(FakeDB.getCopyStore().containsKey(id)) {
-			StdOut.println("Copy with id = " + id + " already exists");
+	/** Add Copy */
+	public static boolean addCopy(String id, String title2)
+	{
+		Copy newCopy = new Copy(id, title2);
+		if (FakeDB.getCopyStore().containsKey(id))
+		{
+			StdOut.println("Copy with ID = " + id + " already exists");
 			return false;
 		}
 		FakeDB.getCopyStore().put(id, newCopy);
 		return true;
 	}
 
-	public static boolean removeCopy(String id) {
-				
-				if(Copy.verifyCopy(id)) {
-					FakeDB.getCopyStore().remove(id, FakeDB.getCopy(id));
-					return true;
-				}
-				StdOut.println("Error: copy with id = " + id + " can not be verified");
-				return false;
+	/** Remove Copy */
+	public static boolean removeCopy(String id)
+	{
+
+		if (Copy.verifyCopy(id))
+		{
+			FakeDB.getCopyStore().remove(id, FakeDB.getCopy(id));
+			return true;
+		}
+		StdOut.println("Error: copy with ID = " + id + " can not be verified");
+		return false;
 	}
-	
 
 }
