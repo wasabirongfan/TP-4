@@ -1,11 +1,11 @@
 /Controller.class
 /Controller_Test.class
 /Copy.class
+/Copy_Test.class
 /FakeDB.class
+/FakeDB_Test.class
 /Patron.class
+/Patron_Test.class
 /TRLapp.class
 /Worker.class
-/Copy_Test.class
-/Patron_Test.class
-/FakeDB_Test.class
 /Worker_Test.class

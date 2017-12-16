@@ -146,4 +146,26 @@ public class Copy
 		return false;
 	}
 
+	public static boolean addCopy(String id, String title2) {
+		// TODO Auto-generated method stub
+		Copy newCopy = new Copy(id,title2);
+		if(FakeDB.getCopyStore().containsKey(id)) {
+			StdOut.println("Copy with id = " + id + " already exists");
+			return false;
+		}
+		FakeDB.getCopyStore().put(id, newCopy);
+		return true;
+	}
+
+	public static boolean removeCopy(String id) {
+				
+				if(Copy.verifyCopy(id)) {
+					FakeDB.getCopyStore().remove(id, FakeDB.getCopy(id));
+					return true;
+				}
+				StdOut.println("Error: copy with id = " + id + " can not be verified");
+				return false;
+	}
+	
+
 }

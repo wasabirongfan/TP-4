@@ -37,7 +37,11 @@ public class Controller
 		System.out.println("Enter 3: To search patron");
 		StdOut.println("Enter 4: To search copy");
 		StdOut.println("Enter 5: To set hold");
-		StdOut.println("Enter 6: To exit");
+		StdOut.println("Enter 6: To add copy");
+		StdOut.println("Enter 7: To remove copy");
+		StdOut.println("Enter 8: To add patron");
+		StdOut.println("Enter 9: To remove patron");
+		StdOut.println("Enter 10: To exit");
 		return true;
 
 	}
@@ -48,12 +52,18 @@ public class Controller
 
 		if (Patron.verifyPatron(pId))
 		{
+			StdOut.println(FakeDB.getPatronStore().get(pId));
+
 			return true;
 		}
 		else
 		{
+			StdOut.println(
+					("Patron Information:\n\tpatron with id: " + pId + " doesn't exist in our database"));
+			//StdOut.println("\nPlease enter Patron ID (e.g. P1): ");
 			return false;
 		}
+		
 
 	}
 
@@ -63,12 +73,17 @@ public class Controller
 
 		if (Copy.verifyCopy(cId))
 		{
+			StdOut.println(FakeDB.getCopyStore().get(cId));
 			return true;
 		}
 		else
 		{
+			StdOut.println(
+			"Copy information: \n\tcopy with id: " + cId + " doesn't exist in our database");
+			StdOut.println("\nPlease enter Copy ID: ");
 			return false;
 		}
+	
 
 	}
 
@@ -124,6 +139,7 @@ public class Controller
 		if (Patron.verifyPatron(pId) && (FakeDB.getPatronStore().get(pId).getHasHolds()
 				&& FakeDB.getPatronStore().get(pId).getHasHolds()) == true)
 		{
+			StdOut.println("Sorry can't " + pId + " has holds");
 			return false;
 		}
 		else if ((Copy.verifyCopy(cId) && Patron.verifyPatron(pId)) == false)
@@ -201,8 +217,59 @@ public class Controller
 				b = false;
 			}
 			FakeDB.getPatron(pId).setHasHolds(b);
+			
+			StdOut.println("...Holds updated...");
+			StdOut.println(FakeDB.getPatronStore().get(pId));
+			
 			return true;
 		}
+		StdOut.println("...Sorry, can't update holds...");
 		return false;
+	}
+	
+	
+	public static boolean addCopy(String cId, String title) {
+		if (Copy.addCopy(cId, title)) {
+			StdOut.println(title + " successfully added");
+			StdOut.println(FakeDB.getCopyStore().get(cId));
+			return true;
+		} else {
+			StdOut.println("...Sorry copy not added");
+			return false;
+		}
+	}
+
+	public static boolean removeCopy(String cId) {
+		if (Copy.removeCopy(cId)) {
+			StdOut.println(cId + " ....successfully removed");
+			return true;
+		} else {
+			StdOut.println("Sorry copy not removed. Probably it doesn't exists");
+			return false;
+		}
+		
+	}
+
+	public static boolean addPatron(String pId, String name) {
+		if (Patron.addPatron(pId, name)) {
+			StdOut.println(name + " successfully added");
+			StdOut.println(FakeDB.getPatronStore().get(pId));
+			return true;
+		} else {
+			StdOut.println("...Sorry Patron not added.");
+			return false;
+		}
+		
+	}
+
+	public static boolean removePatron(String pId) {
+		if (Patron.removePatron(pId)) {
+			StdOut.println(pId + " ....successfully removed");
+			return true;
+		} else {
+			StdOut.println("....Sorry Patron not removed. Probably it doesn't exists");
+			return false;
+		}
+		
 	}
 }

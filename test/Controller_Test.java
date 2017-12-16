@@ -162,4 +162,47 @@ public class Controller_Test
 		boolean getHasHolds = FakeDB.getPatronStore().get(p.getPatronID()).getHasHolds() == true;
 		assertTrue(Controller.startCheckIn(p.getPatronID(), c.getCopyID()));
 	}
+	
+	
+	@Test
+	public void test_add_copy() {
+		String id = "C14";
+		String title = "Fun with Object14";
+		assertTrue("Successfully added C14",Controller.addCopy(id, title) );
+		assertFalse("Faile to added C14",Controller.addCopy(id, title) );
+
+	}
+	
+	@Test
+	public void test_remove_copy() {
+		String id = "C14";
+		String title = "Fun with Object14";
+		assertTrue("Successfully added C14",Controller.addCopy(id, title) );
+		
+		assertTrue("succeeded to remove C14",Controller.removeCopy(id) );
+		assertFalse("Faile to remove C14",Controller.removeCopy(id) );
+
+	}
+
+	
+	
+	@Test
+	public void test_add_patron() {
+		String id = "P224";
+		String name = "kevan";
+		assertTrue("Successfully added P224", Controller.addPatron(id, name) );
+		assertFalse("Faile to added P224",Controller.addPatron(id, name) );
+
+	}
+	
+	@Test
+	public void test_remove_patron() {
+		String id = "P114";
+		String name = "kevan";
+		assertTrue("Successfully added p114",Controller.addPatron(id, name) );
+		
+		assertTrue("succeeded to remove P114",Controller.removePatron(id) );
+		assertFalse("Faile to remove P114",Controller.removePatron(id) );
+
+	}
 }

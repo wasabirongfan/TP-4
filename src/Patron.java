@@ -87,7 +87,7 @@ public class Patron
 
 		if (FakeDB.getPatronStore().containsKey(pId))
 		{
-			StdOut.print("Valid patron");
+			StdOut.println("Valid patron");
 			return true;
 		}
 		StdOut.println("Invalid patron");
@@ -114,5 +114,27 @@ public class Patron
 		}
 		this.hasHolds = false;
 		return false;
+	}
+	
+	public static boolean addPatron(String id, String name) {
+		// TODO Auto-generated method stub
+		Patron newPatron = new Patron(id,name);
+//		if(FakeDB.getPatronStore().containsValue(newPatron)) {
+		if(Patron.verifyPatron(id)) {
+			StdOut.println("...Patron with id = " + id + " already exists");
+			return false;
+		}
+		FakeDB.getPatronStore().put(id, newPatron);
+		return true;
+	}
+
+	public static boolean removePatron(String id) {
+				
+				if(Patron.verifyPatron(id)) {
+					FakeDB.getPatronStore().remove(id, FakeDB.getPatron(id));
+					return true;
+				}
+				StdOut.println("...Error: Patron with id = " + id + " can not be verified");
+				return false;
 	}
 }

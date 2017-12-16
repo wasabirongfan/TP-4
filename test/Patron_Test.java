@@ -77,5 +77,26 @@ public class Patron_Test
 		assertTrue("the copy is overdue", FakeDB.getPatronStore().get(p.getPatronID()).processHolds());
 
 	}
+	
+	
+	@Test
+	public void test_add_patron() {
+		String id = "P14";
+		String name = "kevan";
+		assertTrue("Successfully added P14", Patron.addPatron(id, name) );
+		assertFalse("Faile to added P14",Patron.addPatron(id, name) );
+
+	}
+	
+	@Test
+	public void test_remove_patron() {
+		String id = "P14";
+		String name = "kevan";
+		assertTrue("Successfully added C14",Patron.addPatron(id, name) );
+		
+		assertTrue("succeeded to remove C14",Patron.removePatron(id) );
+		assertFalse("Faile to remove C14",Patron.removePatron(id) );
+
+	}
 
 }

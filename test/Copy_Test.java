@@ -121,5 +121,25 @@ public class Copy_Test
 		assertTrue(FakeDB.getCopyStore().get(copy.getCopyID()).getdueDate().equals(copy.getdueDate()));
 
 	}
+	
+	@Test
+	public void test_add_copy() {
+		String id = "C214";
+		String title = "Fun with Object214";
+		assertTrue("Successfully added C214",Copy.addCopy(id, title) );
+		assertFalse("Faile to added C214",Copy.addCopy(id, title) );
+
+	}
+	
+	@Test
+	public void test_remove_copy() {
+		String id = "C314";
+		String title = "Fun with Object314";
+		assertTrue("Successfully added C314",Copy.addCopy(id, title) );
+		
+		assertTrue("succeeded to remove C314",Copy.removeCopy(id) );
+		assertFalse("Faile to remove C314",Copy.removeCopy(id) );
+
+	}
 
 }
