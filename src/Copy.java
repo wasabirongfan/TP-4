@@ -12,8 +12,8 @@ public class Copy
 	private String copyID;
 	private String title;
 	private Patron outTo;
-	private static Calendar dueDate = new GregorianCalendar() ;
-	
+	private static Calendar dueDate = new GregorianCalendar();
+
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
 	static int DUE_DATE_NUM_MONTHS = 3;
 
@@ -50,9 +50,9 @@ public class Copy
 
 	public void setOutTo(Patron p)
 	{
-		
+
 		this.outTo = p;
-		FakeDB.getCopyStore().get(this.copyID).outTo = p; 
+		FakeDB.getCopyStore().get(this.copyID).outTo = p;
 	}
 
 	public String getTitle()
@@ -87,8 +87,8 @@ public class Copy
 
 	public static boolean checkCopyOut(Copy c, Patron p)
 	{
-		
-		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy ) && (c.getOutTo().getName()).equals(""))
+
+		if (verifyCopy(c.getCopyID()) && (c instanceof Copy) && (c.getOutTo().getName()).equals(""))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(p);
@@ -96,10 +96,11 @@ public class Copy
 			Calendar calendar = new GregorianCalendar();
 			calendar.add(Calendar.MONTH, DUE_DATE_NUM_MONTHS);
 			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(calendar);
-			StdOut.println("..?????.checkout successfull....");
+			StdOut.println("...Checkout successfull....");
 
 			return true;
 		}
+		StdOut.println("...Checkout fails...");
 		return false;
 	}
 
@@ -107,12 +108,17 @@ public class Copy
 	{
 		System.out.println("...Starting checking in " + c.getTitle());
 
-		if ( verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
+		if (verifyCopy(c.getCopyID()) && (c instanceof Copy) && c.getOutTo().equals(p))
 		{
 
 			FakeDB.getCopyStore().get(c.getCopyID()).setOutTo(new Patron("", ""));
 			FakeDB.getPatronStore().get(p.getPatronID()).getCopiesOut().remove(c);
-			FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(new GregorianCalendar());
+			while (FakeDB.getCopyStore().get(c.getOutTo().equals(p) == true) != null)
+			{
+				FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(new GregorianCalendar());
+			}
+			// FakeDB.getCopyStore().get(c.getCopyID()).setdueDate(new
+			// GregorianCalendar().getInstance());
 			StdOut.print("...Checkin successful...");
 			return true;
 		}
@@ -124,10 +130,8 @@ public class Copy
 	{
 		if (FakeDB.getCopyStore().containsKey(cId))
 		{
-			StdOut.println("truuu......");
 			return true;
 		}
-		StdOut.println("Invalid copy!!!");
 		return false;
 
 	}

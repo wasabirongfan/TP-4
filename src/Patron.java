@@ -22,7 +22,7 @@ public class Patron
 		this.copiesOut = new ArrayList<Copy>();
 		this.hasHolds = false;
 	}
-	
+
 	public boolean getHasHolds()
 	{
 		return this.hasHolds;
@@ -68,7 +68,7 @@ public class Patron
 	{
 
 		return "\nPatron Inormation::\n\tPatron ID: " + this.patronID + ", Patron name: " + this.getName()
-				+ " has holds: " + this.hasHolds +  ", Patron copies out: " + this.copiesOut.toString();
+				+ " has holds: " + this.hasHolds + ", Patron copies out: " + this.copiesOut.toString();
 
 	}
 
@@ -87,9 +87,10 @@ public class Patron
 
 		if (FakeDB.getPatronStore().containsKey(pId))
 		{
+			StdOut.print("Valid patron");
 			return true;
 		}
-		StdOut.println("Patron is invalid!!!");
+		StdOut.println("Invalid patron");
 		return false;
 	}
 
@@ -105,7 +106,7 @@ public class Patron
 
 			if (today.after(copiesOut.get(i).getdueDate()))
 			{
-				StdOut.print( this.getName() + " has hold(s)");
+				StdOut.print(this.getName() + " has hold(s)");
 				this.hasHolds = true;
 				return true;
 			}
